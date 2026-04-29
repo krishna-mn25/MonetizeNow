@@ -318,6 +318,41 @@ h2 {
 .dr-desc  { font-size: 15px; font-weight: 400; color: var(--body); line-height: 1.7; }
 .dr-owner { font-size: 12px; color: var(--muted); margin-top: 6px; font-weight: 500; }
 
+/* COMING SOON */
+.coming-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.coming-card {
+  background: var(--white);
+  border: 2px solid var(--rule);
+  border-radius: 16px;
+  padding: 28px 26px;
+  display: flex; flex-direction: column; gap: 10px;
+}
+
+.coming-icon { font-size: 28px; line-height: 1; }
+
+.coming-label {
+  font-size: 17px; font-weight: 700; color: var(--ink);
+  letter-spacing: -0.01em; line-height: 1.3;
+}
+
+.coming-desc {
+  font-size: 14px; font-weight: 400; color: var(--body);
+  line-height: 1.7; flex: 1;
+}
+
+.coming-status {
+  display: inline-block; align-self: flex-start;
+  font-size: 10px; font-weight: 700; letter-spacing: 0.12em;
+  text-transform: uppercase; padding: 4px 12px;
+  border-radius: 20px; margin-top: 4px;
+  background: var(--pale); color: var(--blue);
+}
+
 /* VISION SECTION */
 .vision-rows { border-top: 1px solid var(--rule-d); }
 
@@ -465,6 +500,7 @@ h2 {
   .detail-row { grid-template-columns: 1fr; gap: 6px; }
   .vision-row { grid-template-columns: 1fr; gap: 8px; }
   .vr-time { text-align: left; }
+  .coming-grid { grid-template-columns: 1fr; }
   .logi-grid { grid-template-columns: 1fr; }
   .scard-head { grid-template-columns: 1fr; }
 }
@@ -479,6 +515,7 @@ h2 {
     <li><a href="#schedule">Schedule</a></li>
     <li><a href="#vision">Vision Sessions</a></li>
     <li><a href="#activity">Company Activity</a></li>
+    <li><a href="#coming">What's Coming</a></li>
     <li><a href="#logistics">Logistics</a></li>
   </ul>
 </nav>
@@ -493,7 +530,7 @@ h2 {
     Jackson<br>Hole<br><span class="state">Wyoming</span>
   </h1>
   <div class="hero-bottom r d2">
-    <p class="hero-sub">We're packing up and heading to the ranch. Three nights, big skies, and people who are building MonetizeNow together.</p>
+    <p class="hero-sub">We're packing up and heading to the ranch. Three nights, big skies, and the people building MonetizeNow together.</p>
     <div class="hero-pills">
       <div class="pill"><span class="pill-num">15</span><span class="pill-label">people</span></div>
       <div class="pill"><span class="pill-num">4</span><span class="pill-label">days</span></div>
@@ -793,6 +830,63 @@ h2 {
             <p>Go around. Quick, voluntary, low pressure. Krishna closes last. Then stand up and signal it's done.</p>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMING SOON -->
+<section id="coming">
+  <div class="wrap alt">
+    <div class="inner">
+      <p class="eyebrow r">In Progress</p>
+      <h2 class="r">Being finalised<br>this week.</h2>
+      <p class="section-sub r">A few pieces are still coming together. This page will be updated as each one locks in.</p>
+
+      <div class="coming-grid r">
+
+        <div class="coming-card">
+          <div class="coming-icon">🎤</div>
+          <div class="coming-label">Vision Sessions</div>
+          <div class="coming-desc">Coordinating with Sandeep, Spencer, Brad, Perry, Silas, and Krishna on topics. Each speaker's preview will be added once confirmed.</div>
+          <div class="coming-status">In progress</div>
+        </div>
+
+        <div class="coming-card">
+          <div class="coming-icon">🏔️</div>
+          <div class="coming-label">Off-ranch and on-ranch activities</div>
+          <div class="coming-desc">Kam is selecting activities to fit the schedule windows on Monday and Tuesday. Will be confirmed and added shortly.</div>
+          <div class="coming-status">In progress</div>
+        </div>
+
+        <div class="coming-card">
+          <div class="coming-icon">🃏</div>
+          <div class="coming-label">On-site games</div>
+          <div class="coming-desc">Kevin is putting together the evening game lineup. Poker is on, more to follow.</div>
+          <div class="coming-status">In progress</div>
+        </div>
+
+        <div class="coming-card">
+          <div class="coming-icon">🍽️</div>
+          <div class="coming-label">Dinner out, Tuesday night</div>
+          <div class="coming-desc">Brad is picking the restaurant for Tuesday evening in downtown Jackson Hole. Reservation to follow once confirmed.</div>
+          <div class="coming-status">In progress</div>
+        </div>
+
+        <div class="coming-card">
+          <div class="coming-icon">🥗</div>
+          <div class="coming-label">Menu at the ranch</div>
+          <div class="coming-desc">Working with Maria to finalise all meals. A full food section will be added to this page so everyone knows what to expect each day.</div>
+          <div class="coming-status">Coming soon</div>
+        </div>
+
+        <div class="coming-card">
+          <div class="coming-icon">🥃</div>
+          <div class="coming-label">Drinks</div>
+          <div class="coming-desc">Coordinating with the team on preferences. Drop your requests and we'll make sure the ranch is stocked right.</div>
+          <div class="coming-status">Coming soon</div>
+        </div>
+
       </div>
     </div>
   </div>
