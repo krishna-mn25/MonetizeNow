@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jackson Hole Offsite · MonetizeNow</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:ital,wght@0,300;0,400;0,500;0,700;0,900;1,400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+:root {
+  --blue:      #0521AB;
+  --blue-deep: #03107a;
+  --blue-sky:  #3a68d8;
+  --ice:       #D3EEF4;
+  --ice-mid:   #a8d8e8;
+  --pale:      #eef3fd;
+  --ink:       #060818;
+  --ink-2:     #1e2340;
+  --muted:     #6b738f;
+  --rule:      rgba(5,33,171,0.09);
+  --rule-d:    rgba(255,255,255,0.09);
+  --white:     #ffffff;
+  --off:       #f8f9fd;
+}
+
+body {
+  font-family: 'Red Hat Display', sans-serif;
+  background: var(--white);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+  height: 52px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 48px;
+  background: rgba(6,8,24,0.94);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.nav-logo {
+  font-size: 11px; font-weight: 700; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--ice);
+  text-decoration: none;
+}
+
+.nav-links { display: flex; gap: 2px; list-style: none; }
+
+.nav-links a {
+  font-size: 12px; font-weight: 400;
+  color: rgba(255,255,255,0.38);
+  text-decoration: none; padding: 5px 14px; border-radius: 24px;
+  transition: all 0.18s; letter-spacing: 0.01em;
+}
+
+.nav-links a:hover { color: var(--white); background: rgba(255,255,255,0.07); }
+.nav-links a.active { color: var(--ice); background: rgba(211,238,244,0.12); font-weight: 500; }
+
+/* HERO */
+#hero {
+  min-height: 100vh;
+  background: var(--ink);
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 0 52px 80px;
+  position: relative; overflow: hidden;
+}
+
+.hero-glow {
+  position: absolute; border-radius: 50%; pointer-events: none;
+}
+.glow-1 {
+  width: 800px; height: 800px;
+  background: radial-gradient(circle, var(--blue) 0%, transparent 65%);
+  top: -280px; right: -120px; opacity: 0.28;
+}
+.glow-2 {
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, var(--ice) 0%, transparent 60%);
+  bottom: -100px; left: -80px; opacity: 0.07;
+}
+.glow-3 {
+  width: 300px; height: 300px;
+  background: radial-gradient(circle, var(--blue-sky) 0%, transparent 65%);
+  top: 40%; left: 40%; opacity: 0.12;
+}
+
+.hero-date {
+  position: absolute; top: 76px; left: 52px;
+  font-size: 11px; font-weight: 500; letter-spacing: 0.2em;
+  text-transform: uppercase; color: rgba(211,238,244,0.55);
+  display: flex; align-items: center; gap: 12px; z-index: 2;
+}
+.hero-date::before { content: ''; width: 22px; height: 1px; background: currentColor; }
+
+.hero-h1 {
+  position: relative; z-index: 2;
+  font-size: clamp(68px, 11vw, 148px);
+  font-weight: 900;
+  line-height: 0.88;
+  letter-spacing: -0.04em;
+  color: var(--white);
+  margin-bottom: 0;
+}
+
+.hero-h1 .state {
+  display: block;
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgba(211,238,244,0.35);
+  font-style: italic;
+  font-weight: 400;
+}
+
+.hero-bottom {
+  position: relative; z-index: 2;
+  display: flex; align-items: flex-end; justify-content: space-between;
+  padding-top: 44px;
+  margin-top: 44px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  gap: 40px;
+}
+
+.hero-sub {
+  font-size: 16px; font-weight: 300; line-height: 1.75;
+  color: rgba(255,255,255,0.5); max-width: 400px;
+}
+
+.hero-pills { display: flex; gap: 10px; flex-shrink: 0; flex-wrap: wrap; justify-content: flex-end; }
+
+.pill {
+  display: flex; flex-direction: column; align-items: center;
+  padding: 14px 22px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px; min-width: 80px;
+}
+.pill-num {
+  font-size: 28px; font-weight: 700; color: var(--ice);
+  letter-spacing: -0.02em; line-height: 1;
+}
+.pill-label {
+  font-size: 10px; font-weight: 400; color: rgba(255,255,255,0.3);
+  margin-top: 4px; letter-spacing: 0.06em; text-align: center;
+}
+
+/* SHARED SECTION */
+.wrap { padding: 100px 52px; }
+.wrap.alt { background: var(--off); }
+.wrap.blue { background: var(--blue); }
+.wrap.dark { background: var(--ink-2); }
+.wrap.deep { background: var(--blue-deep); }
+.wrap.ink  { background: var(--ink); }
+
+.inner { max-width: 920px; margin: 0 auto; }
+
+.eyebrow {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.22em;
+  text-transform: uppercase; color: var(--blue);
+  margin-bottom: 18px; display: flex; align-items: center; gap: 10px;
+}
+.eyebrow::before { content: ''; width: 16px; height: 2px; background: currentColor; flex-shrink: 0; }
+.wrap.dark .eyebrow, .wrap.blue .eyebrow, .wrap.deep .eyebrow, .wrap.ink .eyebrow {
+  color: var(--ice);
+}
+.wrap.dark .eyebrow::before, .wrap.blue .eyebrow::before,
+.wrap.deep .eyebrow::before, .wrap.ink .eyebrow::before {
+  background: var(--ice);
+}
+
+h2 {
+  font-size: clamp(34px, 5vw, 60px);
+  font-weight: 700; line-height: 1.05; letter-spacing: -0.025em;
+  color: var(--ink); margin-bottom: 18px;
+}
+.wrap.dark h2, .wrap.blue h2, .wrap.deep h2, .wrap.ink h2 { color: var(--white); }
+
+.section-sub {
+  font-size: 16px; font-weight: 300; line-height: 1.8;
+  color: var(--muted); max-width: 580px;
+  margin-bottom: 60px; padding-bottom: 52px;
+  border-bottom: 1px solid var(--rule);
+}
+.wrap.dark .section-sub, .wrap.deep .section-sub, .wrap.ink .section-sub {
+  color: rgba(255,255,255,0.42); border-color: var(--rule-d);
+}
+.wrap.blue .section-sub { color: rgba(255,255,255,0.65); border-color: rgba(255,255,255,0.2); }
+
+/* SCHEDULE OVERVIEW GRID */
+.schedule-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 52px;
+}
+
+.day-card {
+  border: 1px solid var(--rule);
+  border-radius: 14px;
+  padding: 26px 22px;
+  cursor: pointer;
+  transition: all 0.22s;
+  position: relative;
+  overflow: hidden;
+  background: var(--white);
+}
+
+.day-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: var(--blue); opacity: 0;
+  transition: opacity 0.22s;
+}
+
+.day-card:hover { border-color: rgba(5,33,171,0.25); box-shadow: 0 6px 28px rgba(5,33,171,0.08); }
+.day-card:hover::before { opacity: 1; }
+.day-card.active { border-color: var(--blue); box-shadow: 0 6px 28px rgba(5,33,171,0.12); }
+.day-card.active::before { opacity: 1; }
+
+.dc-day {
+  font-size: 9px; font-weight: 700; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--muted); margin-bottom: 10px;
+}
+.day-card.active .dc-day { color: var(--blue); }
+
+.dc-name {
+  font-size: 18px; font-weight: 700; color: var(--ink);
+  letter-spacing: -0.01em; margin-bottom: 14px; line-height: 1.2;
+}
+
+.dc-pills { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 16px; }
+
+.dc-pill {
+  font-size: 9px; font-weight: 600; letter-spacing: 0.1em;
+  text-transform: uppercase; padding: 3px 8px;
+  border-radius: 20px; white-space: nowrap;
+}
+.p-blue   { background: var(--pale); color: var(--blue); }
+.p-teal   { background: #e0f5f0; color: #0b5244; }
+.p-sky    { background: #ddeeff; color: #0a3d7a; }
+.p-rust   { background: #fdeee8; color: #9b3b0e; }
+.p-sage   { background: #e7f5e7; color: #1f5c1f; }
+.p-slate  { background: #eeeef5; color: #42457a; }
+
+.dc-vibe {
+  font-size: 12px; font-weight: 300; color: var(--muted); line-height: 1.55;
+}
+
+/* EXPANDED DAY DETAIL */
+.day-detail {
+  display: none;
+  border: 1px solid var(--rule);
+  border-radius: 14px;
+  overflow: hidden;
+  margin-bottom: 8px;
+  animation: slideDown 0.28s cubic-bezier(0.22,1,0.36,1);
+}
+.day-detail.open { display: block; }
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.detail-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20px 28px;
+  background: var(--ink);
+  cursor: pointer;
+}
+
+.detail-header-left { display: flex; align-items: center; gap: 16px; }
+.detail-day-badge {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--ice);
+}
+.detail-day-name {
+  font-size: 18px; font-weight: 700; color: var(--white);
+  letter-spacing: -0.01em;
+}
+.detail-close {
+  font-size: 18px; color: rgba(255,255,255,0.3);
+  cursor: pointer; line-height: 1; padding: 4px;
+  transition: color 0.15s;
+}
+.detail-close:hover { color: var(--white); }
+
+.detail-body { background: var(--white); }
+
+.detail-group-label {
+  font-size: 9px; font-weight: 700; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--muted);
+  padding: 22px 28px 6px;
+}
+
+.detail-row {
+  display: grid; grid-template-columns: 108px 1fr;
+  gap: 20px; padding: 18px 28px;
+  border-bottom: 1px solid var(--rule);
+  align-items: start;
+}
+.detail-row:last-child { border-bottom: none; }
+
+.dr-time {
+  font-size: 11px; font-weight: 400; color: var(--muted);
+  padding-top: 3px; line-height: 1.5;
+}
+
+.dr-tag {
+  display: inline-block; font-size: 9px; font-weight: 700;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  padding: 2px 9px; border-radius: 20px; margin-bottom: 6px;
+}
+
+.dr-title { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 4px; line-height: 1.4; }
+.dr-desc  { font-size: 13px; font-weight: 300; color: var(--muted); line-height: 1.7; }
+.dr-owner { font-size: 11px; color: #b0b5cc; margin-top: 5px; }
+
+/* VISION SECTION */
+.vision-rows { border-top: 1px solid var(--rule-d); }
+
+.vision-row {
+  display: grid; grid-template-columns: 88px 1fr 1fr auto;
+  gap: 28px; align-items: start;
+  padding: 40px 0;
+  border-bottom: 1px solid var(--rule-d);
+}
+
+.vr-day {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--ice-mid); padding-top: 3px;
+}
+
+.vr-speakers {
+  font-size: 22px; font-weight: 700; color: var(--white);
+  letter-spacing: -0.015em; line-height: 1.2; margin-bottom: 8px;
+}
+.vr-role { font-size: 13px; font-weight: 300; color: rgba(255,255,255,0.4); line-height: 1.6; }
+
+.vr-topic {
+  font-size: 14px; font-weight: 400; color: rgba(255,255,255,0.65); line-height: 1.7;
+  padding-top: 4px;
+}
+
+.vr-time {
+  font-size: 12px; font-weight: 300; color: rgba(255,255,255,0.3);
+  text-align: right; white-space: nowrap; padding-top: 4px; line-height: 1.7;
+}
+
+.vision-footnote {
+  margin-top: 44px; padding: 22px 26px;
+  background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 10px;
+  font-size: 14px; font-weight: 300; color: rgba(255,255,255,0.4); line-height: 1.8;
+}
+
+/* ACTIVITY SECTION */
+.activity-intro {
+  margin-bottom: 44px;
+}
+.activity-intro p {
+  font-size: 16px; font-weight: 300; color: var(--muted); line-height: 1.85;
+}
+
+.script-stack { display: grid; gap: 4px; }
+
+.scard {
+  border: 1px solid var(--rule); border-radius: 12px;
+  overflow: hidden; background: var(--white);
+  transition: box-shadow 0.2s;
+}
+.scard:hover { box-shadow: 0 6px 24px rgba(5,33,171,0.07); }
+
+.scard-head {
+  display: grid; grid-template-columns: 1fr auto;
+  align-items: center; gap: 16px;
+  padding: 20px 26px;
+  background: var(--pale); border-bottom: 1px solid var(--rule);
+}
+
+.scard-left { display: flex; align-items: baseline; gap: 14px; }
+.sc-phase { font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--blue); }
+.sc-title { font-size: 16px; font-weight: 600; color: var(--ink); }
+.sc-time  { font-size: 12px; font-weight: 300; color: var(--muted); white-space: nowrap; }
+
+.scard-body { padding: 24px 26px; }
+.scard-body p { font-size: 14px; font-weight: 300; color: #3e4565; line-height: 1.85; }
+.scard-body p + p { margin-top: 12px; }
+
+.quote-block {
+  display: block; margin: 18px 0;
+  padding: 18px 22px;
+  background: #f3f5ff; border-left: 3px solid var(--blue);
+  border-radius: 0 10px 10px 0;
+  font-size: 14px; font-style: italic; font-weight: 400;
+  color: var(--ink-2); line-height: 1.8;
+}
+
+.num-list { margin: 16px 0; }
+.ni {
+  display: flex; gap: 14px; align-items: baseline;
+  padding: 10px 0; border-bottom: 1px solid var(--rule);
+  font-size: 13px; font-weight: 300; color: #3e4565; line-height: 1.6;
+}
+.ni:last-child { border-bottom: none; }
+.ni-n { font-size: 10px; font-weight: 700; color: var(--blue); min-width: 18px; }
+
+.q-list { margin-top: 18px; padding-top: 18px; border-top: 1px solid var(--rule); }
+.q-lbl { font-size: 9px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+.q-item { font-size: 13px; font-weight: 300; font-style: italic; color: #3e4565; padding: 8px 0; border-bottom: 1px solid var(--rule); line-height: 1.65; }
+.q-item:last-child { border-bottom: none; }
+
+.f-note {
+  margin-top: 16px; padding: 13px 17px;
+  background: #fffcee; border: 1px solid #ead87a; border-radius: 8px;
+  font-size: 12px; font-weight: 300; color: #4a3900; line-height: 1.7;
+}
+.f-note b { font-weight: 600; }
+
+/* LOGISTICS */
+.logi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+.logi-card {
+  border: 1px solid var(--rule-d); border-radius: 12px;
+  padding: 26px 28px; background: rgba(255,255,255,0.04);
+}
+
+.logi-title {
+  font-size: 9px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--ice-mid); margin-bottom: 18px; padding-bottom: 14px;
+  border-bottom: 1px solid var(--rule-d);
+}
+
+.logi-row {
+  display: flex; justify-content: space-between; gap: 12px;
+  padding: 9px 0; border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.logi-row:last-child { border-bottom: none; }
+.logi-name { font-size: 13px; font-weight: 400; color: rgba(255,255,255,0.75); }
+.logi-val  { font-size: 12px; font-weight: 300; color: rgba(255,255,255,0.35); text-align: right; line-height: 1.5; }
+
+/* CLOSING */
+.close-headline {
+  font-size: clamp(28px, 5vw, 56px);
+  font-weight: 700; line-height: 1.15; letter-spacing: -0.025em;
+  color: var(--white); max-width: 680px; margin-bottom: 52px;
+}
+.close-headline em { font-style: italic; color: var(--ice); font-weight: 300; }
+
+.close-foot {
+  font-size: 11px; font-weight: 400; letter-spacing: 0.14em; text-transform: uppercase;
+  color: rgba(255,255,255,0.18);
+  border-top: 1px solid rgba(255,255,255,0.07); padding-top: 30px;
+}
+
+/* REVEAL */
+.r { opacity: 0; transform: translateY(22px); transition: opacity 0.6s cubic-bezier(.22,1,.36,1), transform 0.6s cubic-bezier(.22,1,.36,1); }
+.r.d1 { transition-delay: 0.07s; }
+.r.d2 { transition-delay: 0.14s; }
+.r.d3 { transition-delay: 0.21s; }
+.r.on { opacity: 1; transform: none; }
+
+/* RESPONSIVE */
+@media (max-width: 760px) {
+  nav { padding: 0 20px; }
+  .nav-links { display: none; }
+  .wrap { padding: 72px 24px; }
+  #hero { padding: 0 24px 60px; }
+  .hero-h1 { font-size: 52px; }
+  .hero-bottom { flex-direction: column; gap: 28px; }
+  .hero-pills { justify-content: flex-start; }
+  .schedule-grid { grid-template-columns: 1fr 1fr; }
+  .detail-row { grid-template-columns: 1fr; gap: 6px; }
+  .vision-row { grid-template-columns: 1fr; gap: 8px; }
+  .vr-time { text-align: left; }
+  .logi-grid { grid-template-columns: 1fr; }
+  .scard-head { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#hero" class="nav-logo">MonetizeNow Offsite</a>
+  <ul class="nav-links">
+    <li><a href="#schedule">Schedule</a></li>
+    <li><a href="#vision">Vision Sessions</a></li>
+    <li><a href="#activity">Company Activity</a></li>
+    <li><a href="#logistics">Logistics</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-glow glow-1"></div>
+  <div class="hero-glow glow-2"></div>
+  <div class="hero-glow glow-3"></div>
+  <p class="hero-date r">May 2026</p>
+  <h1 class="hero-h1 r d1">
+    Jackson<br>Hole<br><span class="state">Wyoming</span>
+  </h1>
+  <div class="hero-bottom r d2">
+    <p class="hero-sub">We're packing up and heading to the ranch. Three nights, big skies, and people who built this thing together.</p>
+    <div class="hero-pills">
+      <div class="pill"><span class="pill-num">15</span><span class="pill-label">people</span></div>
+      <div class="pill"><span class="pill-num">4</span><span class="pill-label">days</span></div>
+      <div class="pill"><span class="pill-num">6</span><span class="pill-label">speakers</span></div>
+      <div class="pill"><span class="pill-num">0</span><span class="pill-label">laptops at dinner</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- SCHEDULE -->
+<section id="schedule">
+  <div class="wrap alt">
+    <div class="inner">
+      <p class="eyebrow r">The Plan</p>
+      <h2 class="r">What's happening,<br>when.</h2>
+      <p class="section-sub r">Pick a day to see the full rundown.</p>
+
+      <!-- DAY OVERVIEW CARDS -->
+      <div class="schedule-grid r">
+
+        <div class="day-card" onclick="toggleDay('sun', this)" id="card-sun">
+          <div class="dc-day">Sunday</div>
+          <div class="dc-name">Arrival<br>Day</div>
+          <div class="dc-pills">
+            <span class="dc-pill p-slate">Arrivals</span>
+            <span class="dc-pill p-teal">Welcome dinner</span>
+          </div>
+          <div class="dc-vibe">Everyone lands. Settle in. First night at the ranch.</div>
+        </div>
+
+        <div class="day-card" onclick="toggleDay('mon', this)" id="card-mon">
+          <div class="dc-day">Monday</div>
+          <div class="dc-name">Full<br>Day</div>
+          <div class="dc-pills">
+            <span class="dc-pill p-blue">Vision talks</span>
+            <span class="dc-pill p-teal">Off-ranch</span>
+            <span class="dc-pill p-rust">Company session</span>
+          </div>
+          <div class="dc-vibe">Big morning, big afternoon. Biggest day of the trip.</div>
+        </div>
+
+        <div class="day-card" onclick="toggleDay('tue', this)" id="card-tue">
+          <div class="dc-day">Tuesday</div>
+          <div class="dc-name">Full<br>Day</div>
+          <div class="dc-pills">
+            <span class="dc-pill p-blue">Vision talks</span>
+            <span class="dc-pill p-sky">On-ranch</span>
+            <span class="dc-pill p-teal">Downtown night</span>
+          </div>
+          <div class="dc-vibe">Morning talks, long outdoor afternoon, night in town.</div>
+        </div>
+
+        <div class="day-card" onclick="toggleDay('wed', this)" id="card-wed">
+          <div class="dc-day">Wednesday</div>
+          <div class="dc-name">Half<br>Day</div>
+          <div class="dc-pills">
+            <span class="dc-pill p-blue">Vision talks</span>
+            <span class="dc-pill p-sage">Closing</span>
+          </div>
+          <div class="dc-vibe">Final talks, closing moment, then everyone heads out.</div>
+        </div>
+
+      </div>
+
+      <!-- EXPANDED DETAIL PANELS -->
+
+      <div class="day-detail" id="detail-sun">
+        <div class="detail-header" onclick="toggleDay('sun', document.getElementById('card-sun'))">
+          <div class="detail-header-left">
+            <span class="detail-day-badge">Sunday</span>
+            <span class="detail-day-name">Arrival Day</span>
+          </div>
+          <span class="detail-close">✕</span>
+        </div>
+        <div class="detail-body">
+          <div class="detail-group-label">Arrival</div>
+          <div class="detail-row"><div class="dr-time">noon – 5pm</div><div><span class="dr-tag p-slate">Arrivals</span><div class="dr-title">Staggered check-in</div><div class="dr-desc">Drinks and snacks out when people get in. Rooms assigned. Property open to explore.</div></div></div>
+          <div class="detail-row"><div class="dr-time">5 – 6:30pm</div><div><span class="dr-tag p-teal">Social</span><div class="dr-title">First gather, drinks on the porch</div><div class="dr-desc">Whoever has arrived. Good company and a good view.</div></div></div>
+          <div class="detail-row"><div class="dr-time">6:30 – 8:30pm</div><div><span class="dr-tag p-slate">Dinner</span><div class="dr-title">Welcome dinner at the house</div><div class="dr-desc">Maria's cooking. Sandeep opens with a few words to kick the trip off. Then dinner.</div></div></div>
+          <div class="detail-row"><div class="dr-time">8:30pm+</div><div><span class="dr-tag p-slate">Evening</span><div class="dr-title">Early night</div><div class="dr-desc">Fire pit is open. Monday is a full day. People wind down at their own pace.</div></div></div>
+        </div>
+      </div>
+
+      <div class="day-detail" id="detail-mon">
+        <div class="detail-header" onclick="toggleDay('mon', document.getElementById('card-mon'))">
+          <div class="detail-header-left">
+            <span class="detail-day-badge">Monday</span>
+            <span class="detail-day-name">Full Day</span>
+          </div>
+          <span class="detail-close">✕</span>
+        </div>
+        <div class="detail-body">
+          <div class="detail-group-label">Morning</div>
+          <div class="detail-row"><div class="dr-time">8 – 9am</div><div><span class="dr-tag p-slate">Breakfast</span><div class="dr-title">Breakfast at the ranch</div><div class="dr-desc">Relaxed start. Maria handles it.</div></div></div>
+          <div class="detail-row"><div class="dr-time">10 – 11:30am</div><div><span class="dr-tag p-blue">Vision · Part 1</span><div class="dr-title">Sandeep and Spencer</div><div class="dr-desc">Two talks, 20 minutes each with a few minutes for questions after each.</div></div></div>
+          <div class="detail-row"><div class="dr-time">11:30am – 1pm</div><div><span class="dr-tag p-teal">Off-Ranch Activity</span><div class="dr-title">Activity window, Kam to confirm</div><div class="dr-desc">90 minutes including travel. Hard return by 12:45 so lunch starts on time.</div><div class="dr-owner">Kam owns logistics and selection.</div></div></div>
+          <div class="detail-group-label">Afternoon</div>
+          <div class="detail-row"><div class="dr-time">1 – 1:30pm</div><div><span class="dr-tag p-slate">Lunch</span><div class="dr-title">Lunch at the ranch</div><div class="dr-desc">Maria handles. 1pm start.</div></div></div>
+          <div class="detail-row"><div class="dr-time">1:30 – 3pm</div><div><span class="dr-tag p-rust">Company Activity</span><div class="dr-title">One Customer, Many Worlds</div><div class="dr-desc">Every function in one room, working through one scenario together.</div><div class="dr-owner">Krishna facilitates. Full script in the Company Activity section.</div></div></div>
+          <div class="detail-row"><div class="dr-time">3 – 5:30pm</div><div><span class="dr-tag p-slate">Free Time</span><div class="dr-title">Open afternoon</div><div class="dr-desc">Walk, rest, explore. Nothing on the schedule.</div></div></div>
+          <div class="detail-group-label">Evening</div>
+          <div class="detail-row"><div class="dr-time">5:30 – 7pm</div><div><span class="dr-tag p-sky">On-Ranch Activity</span><div class="dr-title">On-ranch wind-down, Kam to confirm</div><div class="dr-desc">Lawn games, fire pit, sunset walk. Whatever the group wants.</div><div class="dr-owner">Kam leads.</div></div></div>
+          <div class="detail-row"><div class="dr-time">7 – 9pm</div><div><span class="dr-tag p-slate">Dinner</span><div class="dr-title">Dinner at the ranch</div><div class="dr-desc">Maria handles.</div></div></div>
+          <div class="detail-row"><div class="dr-time">9pm+</div><div><span class="dr-tag p-slate">Evening</span><div class="dr-title">Drinks, fire, whatever fits</div><div class="dr-desc">Kevin sets up poker for whoever's in. Otherwise the night finds its own shape.</div></div></div>
+        </div>
+      </div>
+
+      <div class="day-detail" id="detail-tue">
+        <div class="detail-header" onclick="toggleDay('tue', document.getElementById('card-tue'))">
+          <div class="detail-header-left">
+            <span class="detail-day-badge">Tuesday</span>
+            <span class="detail-day-name">Full Day</span>
+          </div>
+          <span class="detail-close">✕</span>
+        </div>
+        <div class="detail-body">
+          <div class="detail-group-label">Morning</div>
+          <div class="detail-row"><div class="dr-time">8 – 9am</div><div><span class="dr-tag p-slate">Breakfast</span><div class="dr-title">Breakfast at the ranch</div><div class="dr-desc">Slower start after a full Monday.</div></div></div>
+          <div class="detail-row"><div class="dr-time">10 – 11am</div><div><span class="dr-tag p-blue">Vision · Part 2</span><div class="dr-title">Brad and Perry</div><div class="dr-desc">Two talks, 20 minutes each with a few minutes for questions after each.</div></div></div>
+          <div class="detail-row"><div class="dr-time">11 – 11:15am</div><div><span class="dr-tag p-blue">Reflection</span><div class="dr-title">Open reflection, Krishna facilitates</div><div class="dr-desc">One question to the room. Quick round, 60 seconds each. No prep needed.</div></div></div>
+          <div class="detail-group-label">Mid-Morning to Afternoon</div>
+          <div class="detail-row"><div class="dr-time">11:15am – 1pm</div><div><span class="dr-tag p-teal">Off-Ranch Activity</span><div class="dr-title">Activity window, Kam to confirm</div><div class="dr-desc">Different from Monday. Hard return by 12:45.</div><div class="dr-owner">Kam owns logistics and selection.</div></div></div>
+          <div class="detail-row"><div class="dr-time">1 – 1:30pm</div><div><span class="dr-tag p-slate">Lunch</span><div class="dr-title">Lunch at the ranch</div></div></div>
+          <div class="detail-row"><div class="dr-time">1:30 – 4pm</div><div><span class="dr-tag p-sky">On-Ranch Activity</span><div class="dr-title">Afternoon on the property, Kam to confirm</div><div class="dr-desc">ATVs, archery, fishing, ranch games, swimming. Self-directed. People group up naturally.</div><div class="dr-owner">Kam leads.</div></div></div>
+          <div class="detail-row"><div class="dr-time">4 – 5pm</div><div><span class="dr-tag p-slate">Free Time</span><div class="dr-title">Freshen up before downtown</div></div></div>
+          <div class="detail-group-label">Evening, Downtown Jackson Hole</div>
+          <div class="detail-row"><div class="dr-time">5 – 7pm</div><div><span class="dr-tag p-teal">Downtown</span><div class="dr-title">Explore Jackson Hole town</div><div class="dr-desc">Town square, antler arch, browse around. Small groups, self-directed.</div></div></div>
+          <div class="detail-row"><div class="dr-time">7 – 9pm</div><div><span class="dr-tag p-slate">Dinner</span><div class="dr-title">Group dinner downtown</div><div class="dr-desc">Reserved in advance. Mix seating. Options: Blue Lion, Snake River Grill, Glorietta Cantina.</div></div></div>
+          <div class="detail-row"><div class="dr-time">9pm+</div><div><span class="dr-tag p-slate">Evening</span><div class="dr-title">Million Dollar Cowboy Bar</div><div class="dr-desc">Saddle bar stools, live country music, full Wyoming. Let it be a night.</div></div></div>
+        </div>
+      </div>
+
+      <div class="day-detail" id="detail-wed">
+        <div class="detail-header" onclick="toggleDay('wed', document.getElementById('card-wed'))">
+          <div class="detail-header-left">
+            <span class="detail-day-badge">Wednesday</span>
+            <span class="detail-day-name">Half Day</span>
+          </div>
+          <span class="detail-close">✕</span>
+        </div>
+        <div class="detail-body">
+          <div class="detail-group-label">Morning</div>
+          <div class="detail-row"><div class="dr-time">8 – 9am</div><div><span class="dr-tag p-slate">Breakfast</span><div class="dr-title">Last breakfast together</div><div class="dr-desc">Full group, last meal at the house. Maria handles. No rush.</div></div></div>
+          <div class="detail-row"><div class="dr-time">9 – 10:15am</div><div><span class="dr-tag p-blue">Vision · Part 3</span><div class="dr-title">Krishna and Silas</div><div class="dr-desc">Two talks, 20 minutes each with a few minutes for questions after each.</div></div></div>
+          <div class="detail-row"><div class="dr-time">10:15 – 11am</div><div><span class="dr-tag p-sage">Closing</span><div class="dr-title">Closing moment</div><div class="dr-desc">Sandeep closes with a few words. Then open to anyone who wants to say something.</div></div></div>
+          <div class="detail-row"><div class="dr-time">11am – noon</div><div><span class="dr-tag p-slate">Wind Down</span><div class="dr-title">Pack up, photos, goodbyes</div><div class="dr-desc">Hoodies out. Group photo before the first wave leaves. Departures from noon.</div></div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- VISION -->
+<section id="vision">
+  <div class="wrap deep">
+    <div class="inner">
+      <p class="eyebrow r">Vision Sessions</p>
+      <h2 class="r">Six talks.<br>Three mornings.</h2>
+      <p class="section-sub r">One pair per morning, across all three days. Each speaker gets 20 minutes and a few minutes for open questions.</p>
+
+      <div class="vision-rows r">
+        <div class="vision-row">
+          <div class="vr-day">Monday</div>
+          <div>
+            <div class="vr-speakers">Sandeep</div>
+            <div class="vr-role">Chief Executive Officer</div>
+          </div>
+          <div class="vr-topic">TBD, update with Sandeep's topic</div>
+          <div class="vr-time">10:00am<br>~20 min</div>
+        </div>
+        <div class="vision-row">
+          <div class="vr-day">Monday</div>
+          <div>
+            <div class="vr-speakers">Spencer</div>
+            <div class="vr-role">Product</div>
+          </div>
+          <div class="vr-topic">TBD, update with Spencer's topic</div>
+          <div class="vr-time">10:25am<br>~20 min</div>
+        </div>
+        <div class="vision-row">
+          <div class="vr-day">Tuesday</div>
+          <div>
+            <div class="vr-speakers">Brad</div>
+            <div class="vr-role">Sales</div>
+          </div>
+          <div class="vr-topic">TBD, update with Brad's topic</div>
+          <div class="vr-time">10:00am<br>~20 min</div>
+        </div>
+        <div class="vision-row">
+          <div class="vr-day">Tuesday</div>
+          <div>
+            <div class="vr-speakers">Perry</div>
+            <div class="vr-role">Operations</div>
+          </div>
+          <div class="vr-topic">TBD, update with Perry's topic</div>
+          <div class="vr-time">10:25am<br>~20 min</div>
+        </div>
+        <div class="vision-row">
+          <div class="vr-day">Wednesday</div>
+          <div>
+            <div class="vr-speakers">Krishna</div>
+            <div class="vr-role">Strategy</div>
+          </div>
+          <div class="vr-topic">TBD, update with Krishna's topic</div>
+          <div class="vr-time">9:00am<br>~20 min</div>
+        </div>
+        <div class="vision-row">
+          <div class="vr-day">Wednesday</div>
+          <div>
+            <div class="vr-speakers">Silas</div>
+            <div class="vr-role">TBD</div>
+          </div>
+          <div class="vr-topic">TBD, update with Silas's topic</div>
+          <div class="vr-time">9:25am<br>~20 min</div>
+        </div>
+      </div>
+
+      <div class="vision-footnote r">20 minutes per speaker. A few minutes for questions after each. No slides required. Topics are placeholders, update each row once confirmed with speakers.</div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPANY ACTIVITY -->
+<section id="activity">
+  <div class="wrap">
+    <div class="inner">
+      <p class="eyebrow r">Monday · 1:30 – 3pm</p>
+      <h2 class="r">One Customer,<br>Many Worlds.</h2>
+      <p class="section-sub r">90 minutes. One scenario. Every function in the company in one room, each seeing it from their own seat.</p>
+
+      <div class="activity-intro r">
+        <p>A scenario brief goes in front of the room. Each function takes 8 minutes to write down privately what that situation costs their team. Then each team shares, two minutes each, with everyone else just listening. Then the whole room talks about what they heard.</p>
+      </div>
+
+      <div class="script-stack r">
+        <div class="scard">
+          <div class="scard-head">
+            <div class="scard-left"><span class="sc-phase">Opening · 5 min</span><span class="sc-title">Set the frame</span></div>
+          </div>
+          <div class="scard-body">
+            <p>Papers face-down on the table, unread. Say something like:</p>
+            <span class="quote-block">We're going to spend the next 90 minutes on one customer. Not a real customer by name, but one that'll feel familiar. What I want us to do is look at the same situation from where each of us actually sits. Engineering, CX, product, sales, Sandeep, every seat in this company. Because I don't think we always know what the person next to us is carrying. Today we find out.</span>
+            <p>Flip the papers over. Give people two minutes to read.</p>
+          </div>
+        </div>
+
+        <div class="scard">
+          <div class="scard-head">
+            <div class="scard-left"><span class="sc-phase">Phase 1 · 8 min</span><span class="sc-title">Individual reflection</span></div>
+          </div>
+          <div class="scard-body">
+            <span class="quote-block">Take 8 minutes. Don't talk to anyone yet. Write down: what does this situation cost your team specifically? Not the solution, what's the weight? What are you managing that nobody else in this room probably thinks about?</span>
+          </div>
+        </div>
+
+        <div class="scard">
+          <div class="scard-head">
+            <div class="scard-left"><span class="sc-phase">Phase 2 · 30 min</span><span class="sc-title">Round-robin shares</span></div>
+            <span class="sc-time">5 min per team</span>
+          </div>
+          <div class="scard-body">
+            <span class="quote-block">Each team gets 5 minutes to share what they wrote. One rule: no responses, no questions, no "yes, and." Just listen. You'll get your turn.</span>
+            <div class="num-list">
+              <div class="ni"><span class="ni-n">01</span>CX first, closest to the customer relationship</div>
+              <div class="ni"><span class="ni-n">02</span>Engineering, the technical weight beneath every customer request</div>
+              <div class="ni"><span class="ni-n">03</span>Product, the prioritisation pressure nobody outside product fully sees</div>
+              <div class="ni"><span class="ni-n">04</span>Sales, the market implications of getting this right or wrong</div>
+              <div class="ni"><span class="ni-n">05</span>Sandeep last, his view lands differently after everyone else has spoken</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="scard">
+          <div class="scard-head">
+            <div class="scard-left"><span class="sc-phase">Phase 3 · 20 min</span><span class="sc-title">Open synthesis</span></div>
+          </div>
+          <div class="scard-body">
+            <p>After the last share, 10 to 15 seconds of silence. Then:</p>
+            <span class="quote-block">What did you hear that you didn't expect?</span>
+            <p>Open floor. Follow up if the room goes quiet.</p>
+            <div class="q-list">
+              <div class="q-lbl">If you need to get things moving</div>
+              <div class="q-item">Is there something another team does that you depend on more than you've ever said out loud?</div>
+              <div class="q-item">What would make your job genuinely easier that isn't a product or a tool?</div>
+              <div class="q-item">If this customer had a great quarter, who in this room made that happen and would they know it?</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="scard">
+          <div class="scard-head">
+            <div class="scard-left"><span class="sc-phase">Closing · 10 min</span><span class="sc-title">One sentence, then done</span></div>
+          </div>
+          <div class="scard-body">
+            <span class="quote-block">Before we finish, one sentence each. What's one thing you heard today that you're going to carry?</span>
+            <p>Go around. Quick, voluntary, low pressure. Krishna closes last. Then stand up and signal it's done.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LOGISTICS -->
+<section id="logistics">
+  <div class="wrap ink">
+    <div class="inner">
+      <p class="eyebrow r">Reference</p>
+      <h2 class="r">Flights, food,<br>and contacts.</h2>
+      <p class="section-sub r">Everyone's arrival details, dietary needs, and the people running the property.</p>
+
+      <div class="logi-grid r">
+        <div class="logi-card">
+          <div class="logi-title">Sunday arrivals</div>
+          <div class="logi-row"><span class="logi-name">Sandeep, Silas, Matt, Kam, Atreya</span><span class="logi-val">DL 2282 · 12:04pm</span></div>
+          <div class="logi-row"><span class="logi-name">Austin, Brad</span><span class="logi-val">DL 2651 / DL 2008 · 4:13pm</span></div>
+          <div class="logi-row"><span class="logi-name">Krishna</span><span class="logi-val">UA 1537 · 3:18pm</span></div>
+          <div class="logi-row"><span class="logi-name">Spencer</span><span class="logi-val">UA 1306 · 8:58pm</span></div>
+          <div class="logi-row"><span class="logi-name">Will</span><span class="logi-val">Driving</span></div>
+        </div>
+        <div class="logi-card">
+          <div class="logi-title">Monday arrivals</div>
+          <div class="logi-row"><span class="logi-name">Riddhi, Kevin</span><span class="logi-val">AA 1883 · 12:41pm</span></div>
+          <div class="logi-row"><span class="logi-name">Huy</span><span class="logi-val">DL 2282 · 12:04pm</span></div>
+          <div class="logi-row"><span class="logi-name">Perry</span><span class="logi-val">TBD</span></div>
+        </div>
+        <div class="logi-card">
+          <div class="logi-title">Dietary needs</div>
+          <div class="logi-row"><span class="logi-name">Sandeep</span><span class="logi-val">Vegetarian, no eggs</span></div>
+          <div class="logi-row"><span class="logi-name">Riddhi</span><span class="logi-val">Vegetarian, no eggs</span></div>
+          <div class="logi-row"><span class="logi-name">Atreya</span><span class="logi-val">No beef, no pork</span></div>
+          <div class="logi-row"><span class="logi-name">Perry</span><span class="logi-val">No peanuts</span></div>
+          <div class="logi-row"><span class="logi-name">Krishna</span><span class="logi-val">Chicketarian 😄</span></div>
+        </div>
+        <div class="logi-card">
+          <div class="logi-title">Property contacts</div>
+          <div class="logi-row"><span class="logi-name">Idith, Owner</span><span class="logi-val">307-543-1387</span></div>
+          <div class="logi-row"><span class="logi-name">Maria, Meals</span><span class="logi-val">612-558-5865</span></div>
+          <div class="logi-row"><span class="logi-name">Dean, Caretaker</span><span class="logi-val">952-412-5602</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CLOSE -->
+<section>
+  <div class="wrap blue">
+    <div class="inner">
+      <h2 class="close-headline r">Wyoming in May.<br><em>See you there.</em></h2>
+      <p class="close-foot r">MonetizeNow Offsite &nbsp;&nbsp; Jackson Hole, Wyoming &nbsp;&nbsp; May 2026</p>
+    </div>
+  </div>
+</section>
+
+<script>
+function toggleDay(day, cardEl) {
+  const detail = document.getElementById('detail-' + day);
+  const isOpen = detail.classList.contains('open');
+
+  // Close all
+  document.querySelectorAll('.day-detail').forEach(d => d.classList.remove('open'));
+  document.querySelectorAll('.day-card').forEach(c => c.classList.remove('active'));
+
+  // If it wasn't open, open it
+  if (!isOpen) {
+    detail.classList.add('open');
+    cardEl.classList.add('active');
+    // Scroll card into view smoothly
+    setTimeout(() => {
+      detail.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 50);
+  }
+}
+
+// Reveal on scroll
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('on'); });
+}, { threshold: 0.05 });
+document.querySelectorAll('.r').forEach(el => io.observe(el));
+
+// Active nav
+const sections = document.querySelectorAll('section[id]');
+const links = document.querySelectorAll('.nav-links a');
+window.addEventListener('scroll', () => {
+  let cur = '';
+  sections.forEach(s => { if (scrollY >= s.offsetTop - 80) cur = s.id; });
+  links.forEach(a => {
+    a.classList.remove('active');
+    if (a.getAttribute('href') === '#' + cur) a.classList.add('active');
+  });
+}, { passive: true });
+</script>
+</body>
+</html>
