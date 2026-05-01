@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jackson Hole — Meal Plan</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #f5f5f5;
+    color: #1a1a1a;
+    font-size: 14px;
+    padding: 32px 40px 60px;
+    max-width: 780px;
+    margin: 0 auto;
+  }
+
+  .meta { font-size: 12px; color: #888; margin-bottom: 6px; }
+
+  .legend { display: flex; gap: 16px; margin-bottom: 28px; font-size: 12px; color: #555; }
+  .legend-item { display: flex; align-items: center; gap: 5px; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; }
+  .dot-blue { background: #4a7fc1; }
+  .dot-purple { background: #8b6abf; }
+
+  .day-block { margin-bottom: 36px; }
+
+  .day-title { font-size: 22px; font-weight: 400; margin-bottom: 12px; color: #1a1a1a; }
+
+  .meals-grid { display: grid; gap: 12px; }
+  .meals-grid.three { grid-template-columns: repeat(3, 1fr); }
+  .meals-grid.one { grid-template-columns: 1fr; }
+
+  .card { background: #fff; border: 1px solid #e5e5e5; border-radius: 10px; overflow: hidden; }
+
+  .card-header { padding: 9px 14px; font-size: 14px; font-weight: 500; border-bottom: 1px solid #f0f0f0; }
+  .h-sunday    { background: #fdf2e8; color: #a85f1a; }
+  .h-monday    { background: #e8f5ee; color: #1a6b45; }
+  .h-tuesday   { background: #e8eef8; color: #1a4080; }
+  .h-wednesday { background: #f0ecf8; color: #4a2d80; }
+
+  .card-body { padding: 13px 14px; }
+
+  .sublabel {
+    font-size: 10px; font-weight: 500; text-transform: uppercase;
+    letter-spacing: 0.08em; color: #aaa; margin-bottom: 4px;
+  }
+
+  .source-tag {
+    display: inline-block; font-size: 9px; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.07em;
+    padding: 2px 7px; border-radius: 20px; margin-bottom: 5px;
+  }
+  .src-menu { background: #e8eef8; color: #2a5aaa; }
+  .src-riff { background: #f0ecf8; color: #6a3aaa; }
+
+  .meal-title { font-size: 14px; font-weight: 500; color: #1a1a1a; margin-bottom: 5px; line-height: 1.35; }
+  .meal-desc  { font-size: 12.5px; color: #555; line-height: 1.6; margin-bottom: 8px; }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 5px; }
+  .tag { font-size: 11px; padding: 2px 9px; border-radius: 20px; white-space: nowrap; }
+  .t-green  { background: #e6f4ec; color: #1e6e42; }
+  .t-teal   { background: #e0f2ee; color: #1a6358; }
+  .t-blue   { background: #e6eef8; color: #1e4e8c; }
+  .t-amber  { background: #fdf0de; color: #7a5010; }
+  .t-purple { background: #ede8f8; color: #5a3090; }
+  .t-pink   { background: #f8e8f0; color: #8c2058; }
+  .t-gray   { background: #eeeeee; color: #555555; }
+  .t-red    { background: #fdeaea; color: #8c2020; }
+
+  .options { display: flex; flex-direction: column; gap: 6px; margin-bottom: 8px; }
+  .opt { background: #f8f8f8; border-radius: 7px; padding: 8px 11px; }
+  .opt-name { font-size: 13px; font-weight: 500; color: #1a1a1a; margin-bottom: 1px; }
+  .opt-name a { color: #3a6fc1; text-decoration: none; }
+  .opt-name a:hover { text-decoration: underline; }
+  .opt-desc { font-size: 12px; color: #888; }
+
+  .footer {
+    margin-top: 8px; padding: 14px 16px; background: #1a1a1a;
+    border-radius: 10px; font-size: 12px; color: #999; line-height: 1.7;
+  }
+  .footer strong { color: #ccc; font-weight: 500; }
+
+  @media (max-width: 650px) {
+    body { padding: 20px 16px 40px; }
+    .meals-grid.three { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<p class="meta">15 guests · Maria preps & leaves · communal dining · latecomers reheat</p>
+<div class="legend">
+  <div class="legend-item"><div class="dot dot-blue"></div> directly from her menu</div>
+  <div class="legend-item"><div class="dot dot-purple"></div> natural riff on her style</div>
+</div>
+
+<!-- SUNDAY -->
+<div class="day-block">
+  <div class="day-title">Sunday</div>
+  <div class="meals-grid one">
+    <div class="card">
+      <div class="card-header h-sunday">Dinner</div>
+      <div class="card-body">
+        <div class="sublabel">At the ranch — arrival night</div>
+        <span class="source-tag src-menu">from her menu</span>
+        <div class="meal-title">Lasagna — meat tray + vegan tray</div>
+        <div class="meal-desc">Two trays: classic meat lasagna and a vegan lasagna (roasted veg + tomato). Garlic bread and a simple green salad. Oven-ready when people arrive — latecomers just reheat a slice.</div>
+        <div class="tags">
+          <span class="tag t-green">vegan tray = full meal</span>
+          <span class="tag t-teal">perfect reheat</span>
+          <span class="tag t-amber">no timing pressure</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MONDAY -->
+<div class="day-block">
+  <div class="day-title">Monday</div>
+  <div class="meals-grid three">
+    <div class="card">
+      <div class="card-header h-monday">Breakfast</div>
+      <div class="card-body">
+        <div class="sublabel">At the ranch</div>
+        <span class="source-tag src-menu">from her menu</span>
+        <div class="meal-title">DIY Breakfast Burritos</div>
+        <div class="meal-desc">Scrambled eggs, roasted potatoes, salsa, cheese, sour cream in foil-wrapped burritos. Separate potato + black bean + cheese version (no eggs) for Sandeep + Riddhi. Fruit bowl, coffee, OJ.</div>
+        <div class="tags">
+          <span class="tag t-green">veg egg-free option</span>
+          <span class="tag t-teal">reheat in foil</span>
+          <span class="tag t-amber">grab & go</span>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header h-monday">Lunch</div>
+      <div class="card-body">
+        <div class="sublabel">At the ranch</div>
+        <span class="source-tag src-menu">from her menu</span>
+        <div class="meal-title">Chicken Quesadillas + Guacamole + Salsa</div>
+        <div class="meal-desc">Batch-made quesadillas — chicken for meat eaters, cheese + black bean for Sandeep + Riddhi. Guacamole, salsa, sour cream on the table. Reheat in oven or pan in minutes. Crackers + dips alongside.</div>
+        <div class="tags">
+          <span class="tag t-green">veg version easy</span>
+          <span class="tag t-teal">reheat-friendly</span>
+          <span class="tag t-blue">crowd fave</span>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header h-monday">Dinner</div>
+      <div class="card-body">
+        <div class="sublabel">At the ranch — ranch night</div>
+        <span class="source-tag src-menu">from her menu</span>
+        <div class="meal-title">Ranch Dinner — Steak, Grilled Chicken + Saffron Couscous</div>
+        <div class="meal-desc">Three proper centrepieces, one table. Grilled steak for the unrestricted crowd. Grilled chicken thighs — seasoned and served as their own dish, not a backup — for Atreya + Krishna. Saffron couscous with roasted veg + chickpeas (from her menu) for Sandeep + Riddhi — fragrant, filling, genuinely beautiful. Mashed potatoes and roasted carrots + broccoli shared across the whole table.</div>
+        <div class="tags">
+          <span class="tag t-green">veg couscous = full centrepiece</span>
+          <span class="tag t-teal">shared sides for all</span>
+          <span class="tag t-red">ranch showstopper</span>
+          <span class="tag t-amber">Wyoming vibes</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TUESDAY -->
+<div class="day-block">
+  <div class="day-title">Tuesday</div>
+  <div class="meals-grid three">
+    <div class="card">
+      <div class="card-header h-tuesday">Breakfast</div>
+      <div class="card-body">
+        <div class="sublabel">At the ranch</div>
+        <span class="source-tag src-riff">riff on her style</span>
+        <div class="meal-title">Shakshuka + warm pita + labneh</div>
+        <div class="meal-desc">Eggs poached in spiced tomato sauce, served communally from the pan. Warm pita, labneh, fresh herbs. Yogurt + granola alongside for lighter eaters.</div>
+        <div class="tags">
+          <span class="tag t-green">naturally veg</span>
+          <span class="tag t-blue">in her style</span>
+          <span class="tag t-teal">one pan, feeds all</span>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header h-tuesday">Lunch</div>
+      <div class="card-body">
+        <div class="sublabel">At the ranch — light, big dinner tonight</div>
+        <span class="source-tag src-menu">from her menu</span>
+        <div class="meal-title">Chicken Caesar Salad + Sandwich Bar</div>
+        <div class="meal-desc">Big Caesar with grilled chicken on the side — not tossed in. Sandwich bar: bread, hummus, cheese, turkey, avocado, tomato. Crackers + dips. Cold, no reheating.</div>
+        <div class="tags">
+          <span class="tag t-green">veg-friendly base</span>
+          <span class="tag t-purple">light by design</span>
+          <span class="tag t-blue">no reheat</span>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header h-tuesday">Dinner</div>
+      <div class="card-body">
+        <div class="sublabel">Downtown Jackson Hole — Cinco de Mayo</div>
+        <div class="meal-title">Pick one</div>
+        <div class="options">
+          <div class="opt">
+            <div class="opt-name"><a href="https://hatchtaqueria.com" target="_blank">Hatch Taqueria & Tequilas</a></div>
+            <div class="opt-desc">Mexican cuisine — fits the Cinco de Mayo date perfectly</div>
+          </div>
+          <div class="opt">
+            <div class="opt-name"><a href="https://thekitchenjh.com" target="_blank">The Kitchen</a></div>
+            <div class="opt-desc">Mountain-modern creative American fare</div>
+          </div>
+          <div class="opt">
+            <div class="opt-name">Local Restaurant & Bar</div>
+            <div class="opt-desc">Quintessential Wyoming steakhouse — vegetarian options available</div>
+          </div>
+          <div class="opt">
+            <div class="opt-name">The Bistro</div>
+            <div class="opt-desc">Parisian-style brasserie with a rooftop deck — if open</div>
+          </div>
+        </div>
+        <div class="tags">
+          <span class="tag t-pink">night out</span>
+          <span class="tag t-amber">Cinco de Mayo</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- WEDNESDAY -->
+<div class="day-block">
+  <div class="day-title">Wednesday</div>
+  <div class="meals-grid one">
+    <div class="card">
+      <div class="card-header h-wednesday">Breakfast</div>
+      <div class="card-body">
+        <div class="sublabel">At the ranch — departure day</div>
+        <span class="source-tag src-riff">riff on her style</span>
+        <div class="meal-title">Avocado toast station + yogurt + fruit</div>
+        <div class="meal-desc">Toasted bread, smashed avocado, sliced tomato, cucumber, cream cheese, lemon. Yogurt + granola + fresh fruit. Muffins. Coffee pre-programmed. Set out by Maria — zero cooking, everyone grabs and goes.</div>
+        <div class="tags">
+          <span class="tag t-green">fully veg</span>
+          <span class="tag t-amber">zero cooking</span>
+          <span class="tag t-gray">airport-ready timing</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <strong>Not used from Maria's menu:</strong> Salmon · seafood pasta · white fish (Krishna, no fish) · Thai Cabbage Skillet (confirm peanut status before adding). <strong>On standby as swaps:</strong> Stuffed bell peppers · chicken posole · lentil soup + Israeli salad · pasta night.
+</div>
+
+</body>
+</html>
