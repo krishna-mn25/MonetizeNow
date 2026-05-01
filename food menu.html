@@ -27,7 +27,6 @@
   .dot-purple { background: #8b6abf; }
 
   .day-block { margin-bottom: 36px; }
-
   .day-title { font-size: 22px; font-weight: 400; margin-bottom: 12px; color: #1a1a1a; }
 
   .meals-grid { display: grid; gap: 12px; }
@@ -52,13 +51,39 @@
   .source-tag {
     display: inline-block; font-size: 9px; font-weight: 600;
     text-transform: uppercase; letter-spacing: 0.07em;
-    padding: 2px 7px; border-radius: 20px; margin-bottom: 5px;
+    padding: 2px 7px; border-radius: 20px; margin-bottom: 8px;
   }
   .src-menu { background: #e8eef8; color: #2a5aaa; }
   .src-riff { background: #f0ecf8; color: #6a3aaa; }
 
-  .meal-title { font-size: 14px; font-weight: 500; color: #1a1a1a; margin-bottom: 5px; line-height: 1.35; }
-  .meal-desc  { font-size: 12.5px; color: #555; line-height: 1.6; margin-bottom: 8px; }
+  .meal-title { font-size: 14px; font-weight: 500; color: #1a1a1a; margin-bottom: 8px; line-height: 1.35; }
+
+  /* DISH LIST — cook-facing breakdown */
+  .dish-list { display: flex; flex-direction: column; gap: 7px; margin-bottom: 10px; }
+
+  .dish { background: #f8f8f8; border-radius: 7px; padding: 9px 12px; }
+  .dish-name { font-size: 13px; font-weight: 500; color: #1a1a1a; margin-bottom: 2px; }
+  .dish-for { font-size: 12px; color: #555; margin-bottom: 2px; }
+  .dish-with { font-size: 11.5px; color: #999; font-style: italic; }
+
+  .shared-sides {
+    background: #f0f8f4;
+    border: 1px solid #d4edde;
+    border-radius: 7px;
+    padding: 8px 12px;
+    font-size: 12px;
+    color: #2d6b48;
+    margin-bottom: 10px;
+  }
+  .shared-sides span { font-weight: 500; }
+
+  /* restaurant options */
+  .options { display: flex; flex-direction: column; gap: 6px; margin-bottom: 10px; }
+  .opt { background: #f8f8f8; border-radius: 7px; padding: 8px 11px; }
+  .opt-name { font-size: 13px; font-weight: 500; color: #1a1a1a; margin-bottom: 1px; }
+  .opt-name a { color: #3a6fc1; text-decoration: none; }
+  .opt-name a:hover { text-decoration: underline; }
+  .opt-desc { font-size: 12px; color: #888; }
 
   .tags { display: flex; flex-wrap: wrap; gap: 5px; }
   .tag { font-size: 11px; padding: 2px 9px; border-radius: 20px; white-space: nowrap; }
@@ -70,13 +95,6 @@
   .t-pink   { background: #f8e8f0; color: #8c2058; }
   .t-gray   { background: #eeeeee; color: #555555; }
   .t-red    { background: #fdeaea; color: #8c2020; }
-
-  .options { display: flex; flex-direction: column; gap: 6px; margin-bottom: 8px; }
-  .opt { background: #f8f8f8; border-radius: 7px; padding: 8px 11px; }
-  .opt-name { font-size: 13px; font-weight: 500; color: #1a1a1a; margin-bottom: 1px; }
-  .opt-name a { color: #3a6fc1; text-decoration: none; }
-  .opt-name a:hover { text-decoration: underline; }
-  .opt-desc { font-size: 12px; color: #888; }
 
   .footer {
     margin-top: 8px; padding: 14px 16px; background: #1a1a1a;
@@ -107,8 +125,20 @@
       <div class="card-body">
         <div class="sublabel">At the ranch — arrival night</div>
         <span class="source-tag src-menu">from her menu</span>
-        <div class="meal-title">Lasagna — meat tray + vegan tray</div>
-        <div class="meal-desc">Two trays: classic meat lasagna and a vegan lasagna (roasted veg + tomato). Garlic bread and a simple green salad. Oven-ready when people arrive — latecomers just reheat a slice.</div>
+        <div class="meal-title">Lasagna</div>
+        <div class="dish-list">
+          <div class="dish">
+            <div class="dish-name">1. Meat Lasagna</div>
+            <div class="dish-for">For: all non-vegetarian guests (~11 people)</div>
+            <div class="dish-with">With: garlic bread, green salad</div>
+          </div>
+          <div class="dish">
+            <div class="dish-name">2. Vegan Lasagna</div>
+            <div class="dish-for">For: Sandeep + Riddhi (~2 people)</div>
+            <div class="dish-with">With: garlic bread, green salad</div>
+          </div>
+        </div>
+        <div class="shared-sides"><span>Shared for all:</span> Garlic bread · green salad</div>
         <div class="tags">
           <span class="tag t-green">vegan tray = full meal</span>
           <span class="tag t-teal">perfect reheat</span>
@@ -123,13 +153,26 @@
 <div class="day-block">
   <div class="day-title">Monday</div>
   <div class="meals-grid three">
+
     <div class="card">
       <div class="card-header h-monday">Breakfast</div>
       <div class="card-body">
         <div class="sublabel">At the ranch</div>
         <span class="source-tag src-menu">from her menu</span>
         <div class="meal-title">DIY Breakfast Burritos</div>
-        <div class="meal-desc">Scrambled eggs, roasted potatoes, salsa, cheese, sour cream in foil-wrapped burritos. Separate potato + black bean + cheese version (no eggs) for Sandeep + Riddhi. Fruit bowl, coffee, OJ.</div>
+        <div class="dish-list">
+          <div class="dish">
+            <div class="dish-name">1. Egg + Cheese Burritos</div>
+            <div class="dish-for">For: all non-veg guests (~11 people)</div>
+            <div class="dish-with">Scrambled eggs, roasted potatoes, cheese, salsa, sour cream · wrapped in foil</div>
+          </div>
+          <div class="dish">
+            <div class="dish-name">2. Potato + Black Bean + Cheese Burritos</div>
+            <div class="dish-for">For: Sandeep + Riddhi (~2 people) · no eggs</div>
+            <div class="dish-with">Roasted potatoes, black beans, cheese, salsa · wrapped in foil</div>
+          </div>
+        </div>
+        <div class="shared-sides"><span>Shared for all:</span> Fruit bowl · coffee · OJ</div>
         <div class="tags">
           <span class="tag t-green">veg egg-free option</span>
           <span class="tag t-teal">reheat in foil</span>
@@ -137,13 +180,26 @@
         </div>
       </div>
     </div>
+
     <div class="card">
       <div class="card-header h-monday">Lunch</div>
       <div class="card-body">
         <div class="sublabel">At the ranch</div>
         <span class="source-tag src-menu">from her menu</span>
-        <div class="meal-title">Chicken Quesadillas + Guacamole + Salsa</div>
-        <div class="meal-desc">Batch-made quesadillas — chicken for meat eaters, cheese + black bean for Sandeep + Riddhi. Guacamole, salsa, sour cream on the table. Reheat in oven or pan in minutes. Crackers + dips alongside.</div>
+        <div class="meal-title">Chicken Quesadillas</div>
+        <div class="dish-list">
+          <div class="dish">
+            <div class="dish-name">1. Chicken Quesadillas</div>
+            <div class="dish-for">For: all non-vegetarian guests (~11 people)</div>
+            <div class="dish-with">Grilled chicken, cheese · batch-made, foil-wrapped</div>
+          </div>
+          <div class="dish">
+            <div class="dish-name">2. Cheese + Black Bean Quesadillas</div>
+            <div class="dish-for">For: Sandeep + Riddhi (~2 people)</div>
+            <div class="dish-with">Black beans, cheese · batch-made, foil-wrapped</div>
+          </div>
+        </div>
+        <div class="shared-sides"><span>Shared for all:</span> Guacamole · salsa · sour cream · crackers + dips</div>
         <div class="tags">
           <span class="tag t-green">veg version easy</span>
           <span class="tag t-teal">reheat-friendly</span>
@@ -151,21 +207,39 @@
         </div>
       </div>
     </div>
+
     <div class="card">
       <div class="card-header h-monday">Dinner</div>
       <div class="card-body">
         <div class="sublabel">At the ranch — ranch night</div>
         <span class="source-tag src-menu">from her menu</span>
-        <div class="meal-title">Ranch Dinner — Steak, Grilled Chicken + Saffron Couscous</div>
-        <div class="meal-desc">Three proper centrepieces, one table. Grilled steak for the unrestricted crowd. Grilled chicken thighs — seasoned and served as their own dish, not a backup — for Atreya + Krishna. Saffron couscous with roasted veg + chickpeas (from her menu) for Sandeep + Riddhi — fragrant, filling, genuinely beautiful. Mashed potatoes and roasted carrots + broccoli shared across the whole table.</div>
+        <div class="meal-title">Ranch Night</div>
+        <div class="dish-list">
+          <div class="dish">
+            <div class="dish-name">1. Grilled Steak</div>
+            <div class="dish-for">For: Matt + unrestricted guests (~9 people)</div>
+            <div class="dish-with">Grilled to order · rested, covered in foil</div>
+          </div>
+          <div class="dish">
+            <div class="dish-name">2. Grilled Chicken Thighs</div>
+            <div class="dish-for">For: Atreya + Krishna (~2 people) · no beef</div>
+            <div class="dish-with">Seasoned + grilled · served as its own dish</div>
+          </div>
+          <div class="dish">
+            <div class="dish-name">3. Saffron Couscous with Roasted Veg + Chickpeas</div>
+            <div class="dish-for">For: Sandeep + Riddhi (~2 people) · vegan</div>
+            <div class="dish-with">Saffron couscous, roasted veg, chickpeas · full centrepiece</div>
+          </div>
+        </div>
+        <div class="shared-sides"><span>Shared for all:</span> Mashed potatoes · roasted carrots + broccoli</div>
         <div class="tags">
-          <span class="tag t-green">veg couscous = full centrepiece</span>
+          <span class="tag t-green">veg = full centrepiece</span>
           <span class="tag t-teal">shared sides for all</span>
           <span class="tag t-red">ranch showstopper</span>
-          <span class="tag t-amber">Wyoming vibes</span>
         </div>
       </div>
     </div>
+
   </div>
 </div>
 
@@ -173,13 +247,26 @@
 <div class="day-block">
   <div class="day-title">Tuesday</div>
   <div class="meals-grid three">
+
     <div class="card">
       <div class="card-header h-tuesday">Breakfast</div>
       <div class="card-body">
         <div class="sublabel">At the ranch</div>
         <span class="source-tag src-riff">riff on her style</span>
-        <div class="meal-title">Shakshuka + warm pita + labneh</div>
-        <div class="meal-desc">Eggs poached in spiced tomato sauce, served communally from the pan. Warm pita, labneh, fresh herbs. Yogurt + granola alongside for lighter eaters.</div>
+        <div class="meal-title">Shakshuka + Pita + Labneh</div>
+        <div class="dish-list">
+          <div class="dish">
+            <div class="dish-name">1. Shakshuka</div>
+            <div class="dish-for">For: all guests (~15 people) · naturally vegetarian</div>
+            <div class="dish-with">Eggs poached in spiced tomato sauce · served communally from the pan</div>
+          </div>
+          <div class="dish">
+            <div class="dish-name">2. Yogurt + Granola</div>
+            <div class="dish-for">For: lighter eaters or anyone skipping eggs</div>
+            <div class="dish-with">Set out alongside — no prep needed</div>
+          </div>
+        </div>
+        <div class="shared-sides"><span>Shared for all:</span> Warm pita · labneh · fresh herbs · coffee · OJ</div>
         <div class="tags">
           <span class="tag t-green">naturally veg</span>
           <span class="tag t-blue">in her style</span>
@@ -187,13 +274,31 @@
         </div>
       </div>
     </div>
+
     <div class="card">
       <div class="card-header h-tuesday">Lunch</div>
       <div class="card-body">
         <div class="sublabel">At the ranch — light, big dinner tonight</div>
         <span class="source-tag src-menu">from her menu</span>
-        <div class="meal-title">Chicken Caesar Salad + Sandwich Bar</div>
-        <div class="meal-desc">Big Caesar with grilled chicken on the side — not tossed in. Sandwich bar: bread, hummus, cheese, turkey, avocado, tomato. Crackers + dips. Cold, no reheating.</div>
+        <div class="meal-title">Caesar Salad + Sandwich Bar</div>
+        <div class="dish-list">
+          <div class="dish">
+            <div class="dish-name">1. Caesar Salad Base</div>
+            <div class="dish-for">For: all guests (~15 people)</div>
+            <div class="dish-with">Romaine, croutons, parmesan, Caesar dressing · chicken kept separate</div>
+          </div>
+          <div class="dish">
+            <div class="dish-name">2. Grilled Chicken (on the side)</div>
+            <div class="dish-for">For: non-vegetarian guests (~11 people) · not tossed in</div>
+            <div class="dish-with">Sliced, served separately so veg guests just take the salad</div>
+          </div>
+          <div class="dish">
+            <div class="dish-name">3. Sandwich Bar</div>
+            <div class="dish-for">For: all guests — self-serve</div>
+            <div class="dish-with">Bread, hummus, cheese, turkey, avocado, tomato · no cooking needed</div>
+          </div>
+        </div>
+        <div class="shared-sides"><span>Shared for all:</span> Crackers + dips · sparkling water · lemonade</div>
         <div class="tags">
           <span class="tag t-green">veg-friendly base</span>
           <span class="tag t-purple">light by design</span>
@@ -201,6 +306,7 @@
         </div>
       </div>
     </div>
+
     <div class="card">
       <div class="card-header h-tuesday">Dinner</div>
       <div class="card-body">
@@ -230,6 +336,7 @@
         </div>
       </div>
     </div>
+
   </div>
 </div>
 
@@ -242,8 +349,25 @@
       <div class="card-body">
         <div class="sublabel">At the ranch — departure day</div>
         <span class="source-tag src-riff">riff on her style</span>
-        <div class="meal-title">Avocado toast station + yogurt + fruit</div>
-        <div class="meal-desc">Toasted bread, smashed avocado, sliced tomato, cucumber, cream cheese, lemon. Yogurt + granola + fresh fruit. Muffins. Coffee pre-programmed. Set out by Maria — zero cooking, everyone grabs and goes.</div>
+        <div class="meal-title">Avocado Toast Station + Yogurt + Fruit</div>
+        <div class="dish-list">
+          <div class="dish">
+            <div class="dish-name">1. Avocado Toast Station</div>
+            <div class="dish-for">For: all guests (~15 people)</div>
+            <div class="dish-with">Toasted bread, smashed avocado, sliced tomato, cucumber, cream cheese, lemon · set out cold</div>
+          </div>
+          <div class="dish">
+            <div class="dish-name">2. Yogurt + Granola + Fresh Fruit</div>
+            <div class="dish-for">For: all guests — lighter option</div>
+            <div class="dish-with">Set out alongside · no prep needed morning of</div>
+          </div>
+          <div class="dish">
+            <div class="dish-name">3. Muffins</div>
+            <div class="dish-for">For: all guests</div>
+            <div class="dish-with">Store-bought or baked day before · grab and go</div>
+          </div>
+        </div>
+        <div class="shared-sides"><span>Shared for all:</span> Coffee (pre-programmed) · OJ · no cooking required</div>
         <div class="tags">
           <span class="tag t-green">fully veg</span>
           <span class="tag t-amber">zero cooking</span>
