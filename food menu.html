@@ -4,141 +4,431 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Jackson Hole — Meal Plan</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
   body {
-    font-family: 'Inter', sans-serif;
-    background: #f5f5f5;
-    color: #1a1a1a;
-    font-size: 14px;
-    padding: 32px 40px 60px;
-    max-width: 780px;
-    margin: 0 auto;
+    font-family: 'Lato', sans-serif;
+    font-weight: 400;
+    background: #FAFAF8;
+    color: #1C1C1A;
+    font-size: 16px;
+    line-height: 1.7;
   }
 
-  .meta { font-size: 12px; color: #888; margin-bottom: 6px; }
-
-  .legend { display: flex; gap: 16px; margin-bottom: 28px; font-size: 12px; color: #555; }
-  .legend-item { display: flex; align-items: center; gap: 5px; }
-  .dot { width: 8px; height: 8px; border-radius: 50%; }
-  .dot-blue { background: #4a7fc1; }
-  .dot-purple { background: #8b6abf; }
-
-  .day-block { margin-bottom: 36px; }
-  .day-title { font-size: 22px; font-weight: 400; margin-bottom: 12px; color: #1a1a1a; }
-
-  .meals-grid { display: grid; gap: 12px; }
-  .meals-grid.three { grid-template-columns: repeat(3, 1fr); }
-  .meals-grid.one { grid-template-columns: 1fr; }
-
-  .card { background: #fff; border: 1px solid #e5e5e5; border-radius: 10px; overflow: hidden; }
-
-  .card-header { padding: 9px 14px; font-size: 14px; font-weight: 500; border-bottom: 1px solid #f0f0f0; }
-  .h-sunday    { background: #fdf2e8; color: #a85f1a; }
-  .h-monday    { background: #e8f5ee; color: #1a6b45; }
-  .h-tuesday   { background: #e8eef8; color: #1a4080; }
-  .h-wednesday { background: #f0ecf8; color: #4a2d80; }
-
-  .card-body { padding: 13px 14px; }
-
-  .sublabel {
-    font-size: 10px; font-weight: 500; text-transform: uppercase;
-    letter-spacing: 0.08em; color: #aaa; margin-bottom: 4px;
+  /* ── HERO ── */
+  .hero {
+    background: #1C1C1A;
+    color: #FAFAF8;
+    padding: 64px 80px 56px;
   }
 
-  .source-tag {
-    display: inline-block; font-size: 9px; font-weight: 600;
-    text-transform: uppercase; letter-spacing: 0.07em;
-    padding: 2px 7px; border-radius: 20px; margin-bottom: 8px;
-  }
-  .src-menu { background: #e8eef8; color: #2a5aaa; }
-  .src-riff { background: #f0ecf8; color: #6a3aaa; }
-
-  .meal-title { font-size: 14px; font-weight: 500; color: #1a1a1a; margin-bottom: 8px; line-height: 1.35; }
-
-  /* DISH LIST — cook-facing breakdown */
-  .dish-list { display: flex; flex-direction: column; gap: 7px; margin-bottom: 10px; }
-
-  .dish { background: #f8f8f8; border-radius: 7px; padding: 9px 12px; }
-  .dish-name { font-size: 13px; font-weight: 500; color: #1a1a1a; margin-bottom: 2px; }
-  .dish-for { font-size: 12px; color: #555; margin-bottom: 2px; }
-  .dish-with { font-size: 11.5px; color: #999; font-style: italic; }
-
-  .shared-sides {
-    background: #f0f8f4;
-    border: 1px solid #d4edde;
-    border-radius: 7px;
-    padding: 8px 12px;
+  .hero-label {
     font-size: 12px;
-    color: #2d6b48;
-    margin-bottom: 10px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #C87941;
+    margin-bottom: 16px;
   }
-  .shared-sides span { font-weight: 500; }
 
-  /* restaurant options */
-  .options { display: flex; flex-direction: column; gap: 6px; margin-bottom: 10px; }
-  .opt { background: #f8f8f8; border-radius: 7px; padding: 8px 11px; }
-  .opt-name { font-size: 13px; font-weight: 500; color: #1a1a1a; margin-bottom: 1px; }
-  .opt-name a { color: #3a6fc1; text-decoration: none; }
-  .opt-name a:hover { text-decoration: underline; }
-  .opt-desc { font-size: 12px; color: #888; }
+  .hero-title {
+    font-family: 'Merriweather', serif;
+    font-size: 42px;
+    font-weight: 400;
+    line-height: 1.2;
+    margin-bottom: 40px;
+  }
 
-  .tags { display: flex; flex-wrap: wrap; gap: 5px; }
-  .tag { font-size: 11px; padding: 2px 9px; border-radius: 20px; white-space: nowrap; }
-  .t-green  { background: #e6f4ec; color: #1e6e42; }
-  .t-teal   { background: #e0f2ee; color: #1a6358; }
-  .t-blue   { background: #e6eef8; color: #1e4e8c; }
-  .t-amber  { background: #fdf0de; color: #7a5010; }
-  .t-purple { background: #ede8f8; color: #5a3090; }
-  .t-pink   { background: #f8e8f0; color: #8c2058; }
-  .t-gray   { background: #eeeeee; color: #555555; }
-  .t-red    { background: #fdeaea; color: #8c2020; }
+  .hero-stats {
+    display: flex;
+    gap: 48px;
+    flex-wrap: wrap;
+    border-top: 1px solid rgba(250,250,248,0.15);
+    padding-top: 32px;
+  }
 
+  .hero-stat-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(250,250,248,0.4);
+    margin-bottom: 4px;
+  }
+
+  .hero-stat-value {
+    font-size: 17px;
+    font-weight: 300;
+    color: #FAFAF8;
+  }
+
+  /* ── DIET KEY ── */
+  .diet-section {
+    background: #fff;
+    padding: 48px 80px;
+    border-bottom: 1px solid #E8E5DF;
+  }
+
+  .section-eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #999690;
+    margin-bottom: 24px;
+  }
+
+  .diet-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+  }
+
+  .diet-pill {
+    background: #F5F4F1;
+    border-radius: 8px;
+    padding: 14px 18px;
+  }
+
+  .diet-pill .who {
+    font-size: 15px;
+    font-weight: 700;
+    color: #1C1C1A;
+    margin-bottom: 3px;
+  }
+
+  .diet-pill .what {
+    font-size: 14px;
+    color: #666360;
+    line-height: 1.5;
+  }
+
+  .diet-pill.allergy {
+    background: #FEF3E7;
+    border: 1px solid #F0C882;
+  }
+
+  .diet-pill.allergy .who { color: #A05C1A; }
+  .diet-pill.allergy .what { color: #A05C1A; }
+
+  /* ── LEGEND ── */
+  .legend-bar {
+    background: #F5F4F1;
+    padding: 20px 80px;
+    display: flex;
+    gap: 32px;
+    border-bottom: 1px solid #E8E5DF;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: #666360;
+  }
+
+  .ldot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .ldot-blue   { background: #3A6FC1; }
+  .ldot-purple { background: #7A55B8; }
+
+  /* ── DAY SECTIONS ── */
+  .day-section {
+    padding: 60px 80px;
+    border-bottom: 1px solid #E8E5DF;
+  }
+
+  .day-section:nth-child(odd) { background: #fff; }
+  .day-section:nth-child(even) { background: #FAFAF8; }
+
+  .day-heading {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 36px;
+  }
+
+  .day-name {
+    font-family: 'Merriweather', serif;
+    font-size: 30px;
+    font-weight: 400;
+  }
+
+  .day-note {
+    font-size: 15px;
+    color: #999690;
+    font-style: italic;
+  }
+
+  /* ── MEAL GRID ── */
+  .meal-grid {
+    display: grid;
+    gap: 20px;
+  }
+
+  .meal-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+  .meal-grid.cols-1 { grid-template-columns: 1fr; }
+
+  /* ── MEAL CARD ── */
+  .meal-card {
+    background: #fff;
+    border: 1px solid #E8E5DF;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  }
+
+  .meal-card-header {
+    padding: 14px 22px;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    border-bottom: 1px solid #F0EDE8;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .hc-sunday   { background: #FEF3E7; color: #A05C1A; }
+  .hc-monday   { background: #E8F5EE; color: #1A6B45; }
+  .hc-tuesday  { background: #E8EEF8; color: #1A3F80; }
+  .hc-wednesday{ background: #F0EBF8; color: #4A2D80; }
+
+  .src-tag {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 20px;
+  }
+
+  .src-menu   { background: #E8EEF8; color: #2A5AAA; }
+  .src-riff   { background: #F0EBF8; color: #6A3AAA; }
+
+  .meal-card-body {
+    padding: 22px;
+  }
+
+  .meal-card-title {
+    font-family: 'Merriweather', serif;
+    font-size: 17px;
+    font-weight: 700;
+    color: #1C1C1A;
+    margin-bottom: 20px;
+    line-height: 1.4;
+  }
+
+  /* ── DISH LIST ── */
+  .dish-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .dish {
+    background: #F8F7F4;
+    border-radius: 8px;
+    padding: 14px 18px;
+  }
+
+  .dish-name {
+    font-size: 15px;
+    font-weight: 700;
+    color: #1C1C1A;
+    margin-bottom: 5px;
+    line-height: 1.4;
+  }
+
+  .dish-for {
+    font-size: 14px;
+    color: #444240;
+    line-height: 1.6;
+    margin-bottom: 4px;
+  }
+
+  .dish-with {
+    font-size: 13px;
+    color: #999690;
+    line-height: 1.6;
+    font-style: italic;
+  }
+
+  /* ── SHARED SIDES ── */
+  .shared-sides {
+    background: #EBF5F0;
+    border: 1px solid #C2DDD0;
+    border-radius: 8px;
+    padding: 12px 18px;
+    font-size: 14px;
+    color: #1A6B45;
+    line-height: 1.6;
+    margin-bottom: 18px;
+  }
+
+  .shared-sides strong { font-weight: 700; }
+
+  /* ── RESTAURANT OPTIONS ── */
+  .rest-options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+
+  .rest-opt {
+    background: #F8F7F4;
+    border-radius: 8px;
+    padding: 14px 18px;
+  }
+
+  .rest-name {
+    font-size: 15px;
+    font-weight: 700;
+    color: #1C1C1A;
+    margin-bottom: 3px;
+  }
+
+  .rest-name a { color: #2A5AAA; text-decoration: none; }
+  .rest-name a:hover { text-decoration: underline; }
+
+  .rest-desc {
+    font-size: 14px;
+    color: #666360;
+    line-height: 1.5;
+  }
+
+  /* ── TAGS ── */
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .tag {
+    font-size: 12px;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 20px;
+    letter-spacing: 0.02em;
+  }
+
+  .t-green  { background: #E4F2EA; color: #1A6B45; }
+  .t-teal   { background: #DDF0EB; color: #1A6358; }
+  .t-blue   { background: #E4EEF8; color: #1A3F80; }
+  .t-amber  { background: #FEF0DC; color: #7A4F10; }
+  .t-purple { background: #EDE7F8; color: #4A2D80; }
+  .t-pink   { background: #F8E8F0; color: #8C2058; }
+  .t-gray   { background: #EEECEA; color: #555350; }
+  .t-red    { background: #FDEAEA; color: #8C2020; }
+
+  /* ── FOOTER ── */
   .footer {
-    margin-top: 8px; padding: 14px 16px; background: #1a1a1a;
-    border-radius: 10px; font-size: 12px; color: #999; line-height: 1.7;
+    background: #1C1C1A;
+    padding: 48px 80px;
+    color: #999690;
+    font-size: 14px;
+    line-height: 1.8;
   }
-  .footer strong { color: #ccc; font-weight: 500; }
 
-  @media (max-width: 650px) {
-    body { padding: 20px 16px 40px; }
-    .meals-grid.three { grid-template-columns: 1fr; }
+  .footer strong { color: #CCCAC6; font-weight: 700; }
+
+  @media (max-width: 900px) {
+    .hero, .diet-section, .legend-bar, .day-section, .footer { padding-left: 24px; padding-right: 24px; }
+    .meal-grid.cols-3 { grid-template-columns: 1fr; }
+    .hero-title { font-size: 30px; }
   }
 </style>
 </head>
 <body>
 
-<p class="meta">15 guests · Maria preps & leaves · communal dining · latecomers reheat</p>
-<div class="legend">
-  <div class="legend-item"><div class="dot dot-blue"></div> directly from her menu</div>
-  <div class="legend-item"><div class="dot dot-purple"></div> natural riff on her style</div>
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-label">Jackson Hole Ranch · May 2025</div>
+  <h1 class="hero-title">Meal Plan — Sun through Wed</h1>
+  <div class="hero-stats">
+    <div>
+      <div class="hero-stat-label">Guests</div>
+      <div class="hero-stat-value">15 people</div>
+    </div>
+    <div>
+      <div class="hero-stat-label">Chef</div>
+      <div class="hero-stat-value">Maria — preps & leaves</div>
+    </div>
+    <div>
+      <div class="hero-stat-label">Service style</div>
+      <div class="hero-stat-value">Communal · latecomers reheat</div>
+    </div>
+    <div>
+      <div class="hero-stat-label">Night out</div>
+      <div class="hero-stat-value">Tuesday — Cinco de Mayo</div>
+    </div>
+  </div>
 </div>
 
-<!-- SUNDAY -->
-<div class="day-block">
-  <div class="day-title">Sunday</div>
-  <div class="meals-grid one">
-    <div class="card">
-      <div class="card-header h-sunday">Dinner</div>
-      <div class="card-body">
-        <div class="sublabel">At the ranch — arrival night</div>
-        <span class="source-tag src-menu">from her menu</span>
-        <div class="meal-title">Lasagna</div>
+<!-- DIETARY MAP -->
+<div class="diet-section">
+  <div class="section-eyebrow">Dietary map</div>
+  <div class="diet-grid">
+    <div class="diet-pill">
+      <div class="who">Sandeep + Riddhi</div>
+      <div class="what">Vegetarian · no eggs</div>
+    </div>
+    <div class="diet-pill">
+      <div class="who">Atreya</div>
+      <div class="what">No beef · no pork</div>
+    </div>
+    <div class="diet-pill">
+      <div class="who">Krishna</div>
+      <div class="what">Chicken + turkey only · no fish, no beef, no pork</div>
+    </div>
+    <div class="diet-pill allergy">
+      <div class="who">⚠ Perry</div>
+      <div class="what">No peanuts — allergy · hard rule</div>
+    </div>
+    <div class="diet-pill">
+      <div class="who">Everyone else</div>
+      <div class="what">No restrictions</div>
+    </div>
+  </div>
+</div>
+
+<!-- LEGEND -->
+<div class="legend-bar">
+  <div class="legend-item"><div class="ldot ldot-blue"></div> Directly from Maria's menu</div>
+  <div class="legend-item"><div class="ldot ldot-purple"></div> Natural riff on her style</div>
+</div>
+
+<!-- ════ SUNDAY ════ -->
+<div class="day-section">
+  <div class="day-heading">
+    <h2 class="day-name">Sunday</h2>
+    <span class="day-note">arrival day</span>
+  </div>
+  <div class="meal-grid cols-1">
+    <div class="meal-card">
+      <div class="meal-card-header hc-sunday">
+        Dinner
+        <span class="src-tag src-menu">From her menu</span>
+      </div>
+      <div class="meal-card-body">
+        <div class="meal-card-title">Lasagna</div>
         <div class="dish-list">
           <div class="dish">
             <div class="dish-name">1. Meat Lasagna</div>
-            <div class="dish-for">For: all non-vegetarian guests (~11 people)</div>
-            <div class="dish-with">With: garlic bread, green salad</div>
+            <div class="dish-for">For: all non-vegetarian guests — approx. 11 people</div>
+            <div class="dish-with">Classic meat lasagna · oven-ready · latecomers just reheat a slice</div>
           </div>
           <div class="dish">
             <div class="dish-name">2. Vegan Lasagna</div>
-            <div class="dish-for">For: Sandeep + Riddhi (~2 people)</div>
-            <div class="dish-with">With: garlic bread, green salad</div>
+            <div class="dish-for">For: Sandeep + Riddhi — approx. 2 people</div>
+            <div class="dish-with">Roasted veg + tomato sauce · separate tray · clearly labelled</div>
           </div>
         </div>
-        <div class="shared-sides"><span>Shared for all:</span> Garlic bread · green salad</div>
+        <div class="shared-sides"><strong>Shared for all:</strong> Garlic bread · green salad</div>
         <div class="tags">
           <span class="tag t-green">vegan tray = full meal</span>
           <span class="tag t-teal">perfect reheat</span>
@@ -149,30 +439,34 @@
   </div>
 </div>
 
-<!-- MONDAY -->
-<div class="day-block">
-  <div class="day-title">Monday</div>
-  <div class="meals-grid three">
+<!-- ════ MONDAY ════ -->
+<div class="day-section">
+  <div class="day-heading">
+    <h2 class="day-name">Monday</h2>
+    <span class="day-note">first full day</span>
+  </div>
+  <div class="meal-grid cols-3">
 
-    <div class="card">
-      <div class="card-header h-monday">Breakfast</div>
-      <div class="card-body">
-        <div class="sublabel">At the ranch</div>
-        <span class="source-tag src-menu">from her menu</span>
-        <div class="meal-title">DIY Breakfast Burritos</div>
+    <div class="meal-card">
+      <div class="meal-card-header hc-monday">
+        Breakfast
+        <span class="src-tag src-menu">From her menu</span>
+      </div>
+      <div class="meal-card-body">
+        <div class="meal-card-title">DIY Breakfast Burritos</div>
         <div class="dish-list">
           <div class="dish">
             <div class="dish-name">1. Egg + Cheese Burritos</div>
-            <div class="dish-for">For: all non-veg guests (~11 people)</div>
-            <div class="dish-with">Scrambled eggs, roasted potatoes, cheese, salsa, sour cream · wrapped in foil</div>
+            <div class="dish-for">For: all non-veg guests — approx. 11 people</div>
+            <div class="dish-with">Scrambled eggs · roasted potatoes · cheese · salsa · sour cream · wrapped in foil</div>
           </div>
           <div class="dish">
             <div class="dish-name">2. Potato + Black Bean + Cheese Burritos</div>
-            <div class="dish-for">For: Sandeep + Riddhi (~2 people) · no eggs</div>
-            <div class="dish-with">Roasted potatoes, black beans, cheese, salsa · wrapped in foil</div>
+            <div class="dish-for">For: Sandeep + Riddhi — approx. 2 people · no eggs</div>
+            <div class="dish-with">Roasted potatoes · black beans · cheese · salsa · wrapped in foil · clearly labelled</div>
           </div>
         </div>
-        <div class="shared-sides"><span>Shared for all:</span> Fruit bowl · coffee · OJ</div>
+        <div class="shared-sides"><strong>Shared for all:</strong> Fruit bowl · coffee · OJ</div>
         <div class="tags">
           <span class="tag t-green">veg egg-free option</span>
           <span class="tag t-teal">reheat in foil</span>
@@ -181,25 +475,26 @@
       </div>
     </div>
 
-    <div class="card">
-      <div class="card-header h-monday">Lunch</div>
-      <div class="card-body">
-        <div class="sublabel">At the ranch</div>
-        <span class="source-tag src-menu">from her menu</span>
-        <div class="meal-title">Chicken Quesadillas</div>
+    <div class="meal-card">
+      <div class="meal-card-header hc-monday">
+        Lunch
+        <span class="src-tag src-menu">From her menu</span>
+      </div>
+      <div class="meal-card-body">
+        <div class="meal-card-title">Chicken Quesadillas</div>
         <div class="dish-list">
           <div class="dish">
             <div class="dish-name">1. Chicken Quesadillas</div>
-            <div class="dish-for">For: all non-vegetarian guests (~11 people)</div>
-            <div class="dish-with">Grilled chicken, cheese · batch-made, foil-wrapped</div>
+            <div class="dish-for">For: all non-vegetarian guests — approx. 11 people</div>
+            <div class="dish-with">Grilled chicken · cheese · batch-made · foil-wrapped · reheat in oven or pan</div>
           </div>
           <div class="dish">
             <div class="dish-name">2. Cheese + Black Bean Quesadillas</div>
-            <div class="dish-for">For: Sandeep + Riddhi (~2 people)</div>
-            <div class="dish-with">Black beans, cheese · batch-made, foil-wrapped</div>
+            <div class="dish-for">For: Sandeep + Riddhi — approx. 2 people</div>
+            <div class="dish-with">Black beans · cheese · batch-made · foil-wrapped · clearly labelled</div>
           </div>
         </div>
-        <div class="shared-sides"><span>Shared for all:</span> Guacamole · salsa · sour cream · crackers + dips</div>
+        <div class="shared-sides"><strong>Shared for all:</strong> Guacamole · salsa · sour cream · crackers + dips</div>
         <div class="tags">
           <span class="tag t-green">veg version easy</span>
           <span class="tag t-teal">reheat-friendly</span>
@@ -208,30 +503,31 @@
       </div>
     </div>
 
-    <div class="card">
-      <div class="card-header h-monday">Dinner</div>
-      <div class="card-body">
-        <div class="sublabel">At the ranch — ranch night</div>
-        <span class="source-tag src-menu">from her menu</span>
-        <div class="meal-title">Ranch Night</div>
+    <div class="meal-card">
+      <div class="meal-card-header hc-monday">
+        Dinner
+        <span class="src-tag src-menu">From her menu</span>
+      </div>
+      <div class="meal-card-body">
+        <div class="meal-card-title">Ranch Night</div>
         <div class="dish-list">
           <div class="dish">
             <div class="dish-name">1. Grilled Steak</div>
-            <div class="dish-for">For: Matt + unrestricted guests (~9 people)</div>
-            <div class="dish-with">Grilled to order · rested, covered in foil</div>
+            <div class="dish-for">For: Matt + unrestricted guests — approx. 9 people</div>
+            <div class="dish-with">Grilled · rested · covered in foil · reheats well</div>
           </div>
           <div class="dish">
             <div class="dish-name">2. Grilled Chicken Thighs</div>
-            <div class="dish-for">For: Atreya + Krishna (~2 people) · no beef</div>
-            <div class="dish-with">Seasoned + grilled · served as its own dish</div>
+            <div class="dish-for">For: Atreya + Krishna — approx. 2 people · no beef</div>
+            <div class="dish-with">Properly seasoned · served as its own dish · not a backup</div>
           </div>
           <div class="dish">
             <div class="dish-name">3. Saffron Couscous with Roasted Veg + Chickpeas</div>
-            <div class="dish-for">For: Sandeep + Riddhi (~2 people) · vegan</div>
-            <div class="dish-with">Saffron couscous, roasted veg, chickpeas · full centrepiece</div>
+            <div class="dish-for">For: Sandeep + Riddhi — approx. 2 people · vegan</div>
+            <div class="dish-with">Saffron couscous · roasted vegetables · chickpeas · full centrepiece dish</div>
           </div>
         </div>
-        <div class="shared-sides"><span>Shared for all:</span> Mashed potatoes · roasted carrots + broccoli</div>
+        <div class="shared-sides"><strong>Shared for all:</strong> Mashed potatoes · roasted carrots + broccoli</div>
         <div class="tags">
           <span class="tag t-green">veg = full centrepiece</span>
           <span class="tag t-teal">shared sides for all</span>
@@ -243,30 +539,34 @@
   </div>
 </div>
 
-<!-- TUESDAY -->
-<div class="day-block">
-  <div class="day-title">Tuesday</div>
-  <div class="meals-grid three">
+<!-- ════ TUESDAY ════ -->
+<div class="day-section">
+  <div class="day-heading">
+    <h2 class="day-name">Tuesday</h2>
+    <span class="day-note">night out — Cinco de Mayo</span>
+  </div>
+  <div class="meal-grid cols-3">
 
-    <div class="card">
-      <div class="card-header h-tuesday">Breakfast</div>
-      <div class="card-body">
-        <div class="sublabel">At the ranch</div>
-        <span class="source-tag src-riff">riff on her style</span>
-        <div class="meal-title">Shakshuka + Pita + Labneh</div>
+    <div class="meal-card">
+      <div class="meal-card-header hc-tuesday">
+        Breakfast
+        <span class="src-tag src-riff">Riff on her style</span>
+      </div>
+      <div class="meal-card-body">
+        <div class="meal-card-title">Shakshuka + Pita + Labneh</div>
         <div class="dish-list">
           <div class="dish">
             <div class="dish-name">1. Shakshuka</div>
-            <div class="dish-for">For: all guests (~15 people) · naturally vegetarian</div>
+            <div class="dish-for">For: all guests — approx. 15 people · naturally vegetarian</div>
             <div class="dish-with">Eggs poached in spiced tomato sauce · served communally from the pan</div>
           </div>
           <div class="dish">
             <div class="dish-name">2. Yogurt + Granola</div>
             <div class="dish-for">For: lighter eaters or anyone skipping eggs</div>
-            <div class="dish-with">Set out alongside — no prep needed</div>
+            <div class="dish-with">Set out alongside · no prep needed morning of</div>
           </div>
         </div>
-        <div class="shared-sides"><span>Shared for all:</span> Warm pita · labneh · fresh herbs · coffee · OJ</div>
+        <div class="shared-sides"><strong>Shared for all:</strong> Warm pita · labneh · fresh herbs · coffee · OJ</div>
         <div class="tags">
           <span class="tag t-green">naturally veg</span>
           <span class="tag t-blue">in her style</span>
@@ -275,59 +575,62 @@
       </div>
     </div>
 
-    <div class="card">
-      <div class="card-header h-tuesday">Lunch</div>
-      <div class="card-body">
-        <div class="sublabel">At the ranch — light, big dinner tonight</div>
-        <span class="source-tag src-menu">from her menu</span>
-        <div class="meal-title">Caesar Salad + Sandwich Bar</div>
+    <div class="meal-card">
+      <div class="meal-card-header hc-tuesday">
+        Lunch
+        <span class="src-tag src-menu">From her menu</span>
+      </div>
+      <div class="meal-card-body">
+        <div class="meal-card-title">Caesar Salad + Sandwich Bar</div>
         <div class="dish-list">
           <div class="dish">
             <div class="dish-name">1. Caesar Salad Base</div>
-            <div class="dish-for">For: all guests (~15 people)</div>
-            <div class="dish-with">Romaine, croutons, parmesan, Caesar dressing · chicken kept separate</div>
+            <div class="dish-for">For: all guests — approx. 15 people</div>
+            <div class="dish-with">Romaine · croutons · parmesan · Caesar dressing · chicken kept separate</div>
           </div>
           <div class="dish">
             <div class="dish-name">2. Grilled Chicken (on the side)</div>
-            <div class="dish-for">For: non-vegetarian guests (~11 people) · not tossed in</div>
-            <div class="dish-with">Sliced, served separately so veg guests just take the salad</div>
+            <div class="dish-for">For: non-vegetarian guests — approx. 11 people</div>
+            <div class="dish-with">Sliced · served separately · not tossed in</div>
           </div>
           <div class="dish">
             <div class="dish-name">3. Sandwich Bar</div>
             <div class="dish-for">For: all guests — self-serve</div>
-            <div class="dish-with">Bread, hummus, cheese, turkey, avocado, tomato · no cooking needed</div>
+            <div class="dish-with">Bread · hummus · cheese · turkey · avocado · tomato · no cooking needed</div>
           </div>
         </div>
-        <div class="shared-sides"><span>Shared for all:</span> Crackers + dips · sparkling water · lemonade</div>
+        <div class="shared-sides"><strong>Shared for all:</strong> Crackers + dips · sparkling water · lemonade</div>
         <div class="tags">
           <span class="tag t-green">veg-friendly base</span>
           <span class="tag t-purple">light by design</span>
-          <span class="tag t-blue">no reheat</span>
+          <span class="tag t-blue">no reheat needed</span>
         </div>
       </div>
     </div>
 
-    <div class="card">
-      <div class="card-header h-tuesday">Dinner</div>
-      <div class="card-body">
-        <div class="sublabel">Downtown Jackson Hole — Cinco de Mayo</div>
-        <div class="meal-title">Pick one</div>
-        <div class="options">
-          <div class="opt">
-            <div class="opt-name"><a href="https://hatchtaqueria.com" target="_blank">Hatch Taqueria & Tequilas</a></div>
-            <div class="opt-desc">Mexican cuisine — fits the Cinco de Mayo date perfectly</div>
+    <div class="meal-card">
+      <div class="meal-card-header hc-tuesday">
+        Dinner
+        <span style="font-size:12px;font-weight:700;color:#1A3F80;letter-spacing:0.05em;">Downtown Jackson Hole</span>
+      </div>
+      <div class="meal-card-body">
+        <div class="meal-card-title">Pick one</div>
+        <div class="rest-options">
+          <div class="rest-opt">
+            <div class="rest-name"><a href="https://hatchtaqueria.com" target="_blank">Hatch Taqueria & Tequilas</a></div>
+            <div class="rest-desc">Mexican cuisine — fits the Cinco de Mayo date perfectly</div>
           </div>
-          <div class="opt">
-            <div class="opt-name"><a href="https://thekitchenjh.com" target="_blank">The Kitchen</a></div>
-            <div class="opt-desc">Mountain-modern creative American fare</div>
+          <div class="rest-opt">
+            <div class="rest-name"><a href="https://thekitchenjh.com" target="_blank">The Kitchen</a></div>
+            <div class="rest-desc">Mountain-modern creative American fare</div>
           </div>
-          <div class="opt">
-            <div class="opt-name">Local Restaurant & Bar</div>
-            <div class="opt-desc">Quintessential Wyoming steakhouse — vegetarian options available</div>
+          <div class="rest-opt">
+            <div class="rest-name">Local Restaurant & Bar</div>
+            <div class="rest-desc">Quintessential Wyoming steakhouse · vegetarian options available</div>
           </div>
-          <div class="opt">
-            <div class="opt-name">The Bistro</div>
-            <div class="opt-desc">Parisian-style brasserie with a rooftop deck — if open</div>
+          <div class="rest-opt">
+            <div class="rest-name">The Bistro</div>
+            <div class="rest-desc">Parisian-style brasserie with a rooftop deck — if open</div>
           </div>
         </div>
         <div class="tags">
@@ -340,21 +643,25 @@
   </div>
 </div>
 
-<!-- WEDNESDAY -->
-<div class="day-block">
-  <div class="day-title">Wednesday</div>
-  <div class="meals-grid one">
-    <div class="card">
-      <div class="card-header h-wednesday">Breakfast</div>
-      <div class="card-body">
-        <div class="sublabel">At the ranch — departure day</div>
-        <span class="source-tag src-riff">riff on her style</span>
-        <div class="meal-title">Avocado Toast Station + Yogurt + Fruit</div>
+<!-- ════ WEDNESDAY ════ -->
+<div class="day-section">
+  <div class="day-heading">
+    <h2 class="day-name">Wednesday</h2>
+    <span class="day-note">departure day</span>
+  </div>
+  <div class="meal-grid cols-1">
+    <div class="meal-card">
+      <div class="meal-card-header hc-wednesday">
+        Breakfast
+        <span class="src-tag src-riff">Riff on her style</span>
+      </div>
+      <div class="meal-card-body">
+        <div class="meal-card-title">Avocado Toast Station + Yogurt + Fruit</div>
         <div class="dish-list">
           <div class="dish">
             <div class="dish-name">1. Avocado Toast Station</div>
-            <div class="dish-for">For: all guests (~15 people)</div>
-            <div class="dish-with">Toasted bread, smashed avocado, sliced tomato, cucumber, cream cheese, lemon · set out cold</div>
+            <div class="dish-for">For: all guests — approx. 15 people</div>
+            <div class="dish-with">Toasted bread · smashed avocado · sliced tomato · cucumber · cream cheese · lemon · set out cold</div>
           </div>
           <div class="dish">
             <div class="dish-name">2. Yogurt + Granola + Fresh Fruit</div>
@@ -364,10 +671,10 @@
           <div class="dish">
             <div class="dish-name">3. Muffins</div>
             <div class="dish-for">For: all guests</div>
-            <div class="dish-with">Store-bought or baked day before · grab and go</div>
+            <div class="dish-with">Baked day before or store-bought · grab and go</div>
           </div>
         </div>
-        <div class="shared-sides"><span>Shared for all:</span> Coffee (pre-programmed) · OJ · no cooking required</div>
+        <div class="shared-sides"><strong>Shared for all:</strong> Coffee (pre-programmed) · OJ · zero cooking required</div>
         <div class="tags">
           <span class="tag t-green">fully veg</span>
           <span class="tag t-amber">zero cooking</span>
@@ -378,8 +685,10 @@
   </div>
 </div>
 
+<!-- FOOTER -->
 <div class="footer">
-  <strong>Not used from Maria's menu:</strong> Salmon · seafood pasta · white fish (Krishna, no fish) · Thai Cabbage Skillet (confirm peanut status before adding). <strong>On standby as swaps:</strong> Stuffed bell peppers · chicken posole · lentil soup + Israeli salad · pasta night.
+  <strong>Not used from Maria's menu:</strong> Salmon · seafood pasta · white fish (Krishna, no fish) · Thai Cabbage Skillet (confirm peanut status before adding) · 7-hour brisket (timing too intense for a 3-day stay).<br>
+  <strong>On standby as swaps:</strong> Stuffed bell peppers · chicken posole · lentil soup + Israeli salad · pasta night.
 </div>
 
 </body>
