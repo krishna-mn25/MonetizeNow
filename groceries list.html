@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grocery List — Jackson Hole Ranch</title>
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Lato', sans-serif;
+    font-weight: 400;
+    background: #FAFAF8;
+    color: #1C1C1A;
+    font-size: 16px;
+    line-height: 1.7;
+  }
+
+  /* HERO */
+  .hero {
+    background: #1C1C1A;
+    color: #FAFAF8;
+    padding: 56px 80px 48px;
+  }
+
+  .hero-label {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #C87941;
+    margin-bottom: 14px;
+  }
+
+  .hero-title {
+    font-family: 'Merriweather', serif;
+    font-size: 38px;
+    font-weight: 400;
+    line-height: 1.2;
+    margin-bottom: 36px;
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 48px;
+    flex-wrap: wrap;
+    border-top: 1px solid rgba(250,250,248,0.15);
+    padding-top: 28px;
+  }
+
+  .hero-stat-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(250,250,248,0.4);
+    margin-bottom: 3px;
+  }
+
+  .hero-stat-value {
+    font-size: 16px;
+    font-weight: 300;
+    color: #FAFAF8;
+  }
+
+  /* NOTICE */
+  .notice {
+    background: #FEF3E7;
+    border-left: 4px solid #C87941;
+    padding: 20px 80px;
+    font-size: 15px;
+    color: #7A4F10;
+    line-height: 1.6;
+  }
+
+  .notice strong { font-weight: 700; }
+
+  /* MEAL LEGEND */
+  .meal-legend {
+    background: #fff;
+    padding: 36px 80px;
+    border-bottom: 1px solid #E8E5DF;
+  }
+
+  .section-eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #999690;
+    margin-bottom: 20px;
+  }
+
+  .legend-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 10px;
+  }
+
+  .legend-pill {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #F5F4F1;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 14px;
+  }
+
+  .meal-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .dot-sun  { background: #C87941; }
+  .dot-mon  { background: #2A8A5A; }
+  .dot-tue  { background: #2A5AAA; }
+  .dot-wed  { background: #6A3AAA; }
+  .dot-all  { background: #666360; }
+
+  /* MAIN CONTENT */
+  .content {
+    padding: 0 80px 80px;
+  }
+
+  /* CATEGORY BLOCK */
+  .category-block {
+    margin-top: 56px;
+  }
+
+  .category-title {
+    font-family: 'Merriweather', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: #1C1C1A;
+    padding-bottom: 14px;
+    border-bottom: 2px solid #1C1C1A;
+    margin-bottom: 0;
+  }
+
+  /* TABLE */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 15px;
+  }
+
+  thead tr {
+    background: #F5F4F1;
+  }
+
+  thead th {
+    text-align: left;
+    padding: 14px 16px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #666360;
+    border-bottom: 1px solid #E8E5DF;
+  }
+
+  tbody tr {
+    border-bottom: 1px solid #EEECEA;
+  }
+
+  tbody tr:last-child {
+    border-bottom: none;
+  }
+
+  tbody tr:hover {
+    background: #F8F7F4;
+  }
+
+  td {
+    padding: 14px 16px;
+    vertical-align: top;
+    line-height: 1.5;
+  }
+
+  td:first-child {
+    font-weight: 700;
+    color: #1C1C1A;
+    width: 38%;
+  }
+
+  td:nth-child(2) {
+    color: #1C1C1A;
+    width: 24%;
+    font-weight: 400;
+  }
+
+  td:nth-child(3) {
+    color: #666360;
+    font-size: 14px;
+    width: 38%;
+  }
+
+  /* MEAL TAGS inline */
+  .mtag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 1px 7px;
+    border-radius: 20px;
+    margin-right: 3px;
+    margin-bottom: 2px;
+    white-space: nowrap;
+  }
+
+  .m-sun  { background: #FEF0DC; color: #A05C1A; }
+  .m-mon  { background: #E4F2EA; color: #1A6B45; }
+  .m-tue  { background: #E4EEF8; color: #1A3F80; }
+  .m-wed  { background: #EDE7F8; color: #4A2D80; }
+  .m-all  { background: #EEECEA; color: #444240; }
+
+  /* ALERT ROW */
+  tr.alert-row td {
+    background: #FEF3E7;
+    color: #A05C1A;
+    font-weight: 700;
+  }
+
+  /* FOOTER */
+  .footer {
+    background: #1C1C1A;
+    padding: 48px 80px;
+    color: #999690;
+    font-size: 14px;
+    line-height: 1.8;
+    margin-top: 60px;
+  }
+
+  .footer strong { color: #CCCAC6; font-weight: 700; }
+
+  @media (max-width: 900px) {
+    .hero, .notice, .meal-legend, .content, .footer { padding-left: 24px; padding-right: 24px; }
+    td:first-child { width: auto; }
+    thead th:nth-child(3), td:nth-child(3) { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-label">Jackson Hole Ranch · May 2025</div>
+  <h1 class="hero-title">Grocery List for Maria</h1>
+  <div class="hero-stats">
+    <div>
+      <div class="hero-stat-label">Guests</div>
+      <div class="hero-stat-value">15 people</div>
+    </div>
+    <div>
+      <div class="hero-stat-label">Days</div>
+      <div class="hero-stat-value">Sunday — Wednesday</div>
+    </div>
+    <div>
+      <div class="hero-stat-label">Meals covered</div>
+      <div class="hero-stat-value">6 ranch meals + snacks</div>
+    </div>
+    <div>
+      <div class="hero-stat-label">Tuesday dinner</div>
+      <div class="hero-stat-value">Restaurant — not included</div>
+    </div>
+  </div>
+</div>
+
+<!-- ALLERGY NOTICE -->
+<div class="notice">
+  <strong>⚠ Allergy alert — Perry:</strong> No peanuts anywhere. Check all packaged items (trail mix, granola bars, crackers, dressings) for peanut content before purchasing. Tree nuts are fine.
+</div>
+
+<!-- MEAL LEGEND -->
+<div class="meal-legend">
+  <div class="section-eyebrow">Meal key — used in the "used for" column</div>
+  <div class="legend-grid">
+    <div class="legend-pill"><div class="meal-dot dot-sun"></div> Sun Dinner — Lasagna</div>
+    <div class="legend-pill"><div class="meal-dot dot-mon"></div> Mon Breakfast — Burritos</div>
+    <div class="legend-pill"><div class="meal-dot dot-mon"></div> Mon Lunch — Quesadillas</div>
+    <div class="legend-pill"><div class="meal-dot dot-mon"></div> Mon Dinner — Ranch Night</div>
+    <div class="legend-pill"><div class="meal-dot dot-tue"></div> Tue Breakfast — Shakshuka</div>
+    <div class="legend-pill"><div class="meal-dot dot-tue"></div> Tue Lunch — Caesar + Sandwiches</div>
+    <div class="legend-pill"><div class="meal-dot dot-wed"></div> Wed Breakfast — Avo Toast</div>
+    <div class="legend-pill"><div class="meal-dot dot-all"></div> Multiple meals / all days</div>
+  </div>
+</div>
+
+<div class="content">
+
+<!-- ═══ MEAT & PROTEIN ═══ -->
+<div class="category-block">
+  <div class="category-title">Meat & Protein</div>
+  <table>
+    <thead>
+      <tr>
+        <th>Item</th>
+        <th>Quantity</th>
+        <th>Used for / Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Ground beef (or beef/pork mix)</td>
+        <td>1.8 kg</td>
+        <td><span class="mtag m-sun">Sun Dinner</span> Meat lasagna · ~11 people</td>
+      </tr>
+      <tr>
+        <td>Ribeye or NY Strip steaks</td>
+        <td>3 kg total</td>
+        <td><span class="mtag m-mon">Mon Dinner</span> ~9 people · 300g per person + buffer · pre-cut or ask butcher to portion</td>
+      </tr>
+      <tr>
+        <td>Chicken breasts (boneless)</td>
+        <td>2 kg</td>
+        <td><span class="mtag m-mon">Mon Lunch</span><span class="mtag m-tue">Tue Lunch</span> Mon quesadillas (~1.2kg) + Tue Caesar grilled chicken (~800g)</td>
+      </tr>
+      <tr>
+        <td>Chicken thighs (bone-in or boneless)</td>
+        <td>700 g (~4–5 thighs)</td>
+        <td><span class="mtag m-mon">Mon Dinner</span> For Atreya + Krishna · generous portions</td>
+      </tr>
+      <tr>
+        <td>Sliced turkey deli meat</td>
+        <td>400 g pack</td>
+        <td><span class="mtag m-tue">Tue Lunch</span> Sandwich bar · non-veg guests</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ═══ DAIRY & EGGS ═══ -->
+<div class="category-block">
+  <div class="category-title">Dairy & Eggs</div>
+  <table>
+    <thead>
+      <tr>
+        <th>Item</th>
+        <th>Quantity</th>
+        <th>Used for / Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Eggs (large)</td>
+        <td>5 dozen (60 eggs)</td>
+        <td><span class="mtag m-mon">Mon Bkfst</span><span class="mtag m-tue">Tue Bkfst</span> Mon burritos ~24 eggs + Tue shakshuka ~30 eggs + buffer</td>
+      </tr>
+      <tr>
+        <td>Ricotta cheese</td>
+        <td>2 × 500g tubs</td>
+        <td><span class="mtag m-sun">Sun Dinner</span> Meat lasagna layers</td>
+      </tr>
+      <tr>
+        <td>Shredded mozzarella</td>
+        <td>2 × 400g bags</td>
+        <td><span class="mtag m-sun">Sun Dinner</span> Both lasagna trays · topping</td>
+      </tr>
+      <tr>
+        <td>Parmesan block</td>
+        <td>400 g</td>
+        <td><span class="mtag m-sun">Sun Dinner</span><span class="mtag m-tue">Tue Lunch</span> Lasagna + Caesar salad</td>
+      </tr>
+      <tr>
+        <td>Shredded cheddar</td>
+        <td>2 × 340g bags</td>
+        <td><span class="mtag m-mon">Mon Bkfst</span><span class="mtag m-mon">Mon Lunch</span> Burritos + quesadillas</td>
+      </tr>
+      <tr>
+        <td>Feta cheese</td>
+        <td>200 g block</td>
+        <td><span class="mtag m-tue">Tue Bkfst</span> Crumbled over shakshuka</td>
+      </tr>
+      <tr>
+        <td>Sliced cheese (Swiss or provolone)</td>
+        <td>300 g pack</td>
+        <td><span class="mtag m-tue">Tue Lunch</span> Sandwich bar</td>
+      </tr>
+      <tr>
+        <td>Cream cheese</td>
+        <td>2 × 200g tubs</td>
+        <td><span class="mtag m-wed">Wed Bkfst</span> Avocado toast station</td>
+      </tr>
+      <tr>
+        <td>Greek yogurt (plain)</td>
+        <td>2 × 500g tubs</td>
+        <td><span class="mtag m-tue">Tue Bkfst</span><span class="mtag m-wed">Wed Bkfst</span> Yogurt bar both mornings</td>
+      </tr>
+      <tr>
+        <td>Labneh</td>
+        <td>2 × 200g tubs</td>
+        <td><span class="mtag m-tue">Tue Bkfst</span> Alongside shakshuka + pita</td>
+      </tr>
+      <tr>
+        <td>Sour cream</td>
+        <td>1 × 500g tub</td>
+        <td><span class="mtag m-mon">Mon Bkfst</span><span class="mtag m-mon">Mon Lunch</span> Burritos + quesadillas shared</td>
+      </tr>
+      <tr>
+        <td>Butter (unsalted)</td>
+        <td>500 g block</td>
+        <td><span class="mtag m-all">All meals</span> Garlic bread · mash · general cooking</td>
+      </tr>
+      <tr>
+        <td>Heavy cream or whole milk</td>
+        <td>300 ml</td>
+        <td><span class="mtag m-mon">Mon Dinner</span> Mashed potatoes</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ═══ PRODUCE ═══ -->
+<div class="category-block">
+  <div class="category-title">Produce</div>
+  <table>
+    <thead>
+      <tr>
+        <th>Item</th>
+        <th>Quantity</th>
+        <th>Used for / Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Avocados</td>
+        <td>10 ripe</td>
+        <td><span class="mtag m-mon">Mon Lunch</span><span class="mtag m-tue">Tue Lunch</span><span class="mtag m-wed">Wed Bkfst</span> Mon guacamole (~4) + Tue sandwiches (~2) + Wed toast (~4)</td>
+      </tr>
+      <tr>
+        <td>Romaine lettuce heads</td>
+        <td>7 heads</td>
+        <td><span class="mtag m-sun">Sun Dinner</span><span class="mtag m-tue">Tue Lunch</span> 3 for Sun salad + 4 for Tue Caesar</td>
+      </tr>
+      <tr>
+        <td>Cherry tomatoes</td>
+        <td>3 × 250g punnets</td>
+        <td><span class="mtag m-sun">Sun Dinner</span><span class="mtag m-mon">Mon Dinner</span> Sun salad + Mon dinner roasted veg</td>
+      </tr>
+      <tr>
+        <td>Large vine tomatoes</td>
+        <td>4 large</td>
+        <td><span class="mtag m-tue">Tue Lunch</span><span class="mtag m-wed">Wed Bkfst</span> Sandwich bar + avo toast station</td>
+      </tr>
+      <tr>
+        <td>Cucumber</td>
+        <td>4 medium</td>
+        <td><span class="mtag m-sun">Sun Dinner</span><span class="mtag m-wed">Wed Bkfst</span> 2 for Sun salad + 2 for Wed station</td>
+      </tr>
+      <tr>
+        <td>Bell peppers (red + yellow)</td>
+        <td>8 peppers</td>
+        <td><span class="mtag m-sun">Sun Dinner</span><span class="mtag m-mon">Mon Dinner</span><span class="mtag m-tue">Tue Bkfst</span> Vegan lasagna (2) + couscous veg (2) + shakshuka (3) + buffer (1)</td>
+      </tr>
+      <tr>
+        <td>Zucchini</td>
+        <td>5 medium</td>
+        <td><span class="mtag m-sun">Sun Dinner</span><span class="mtag m-mon">Mon Dinner</span> 3 for vegan lasagna + 2 for couscous roast</td>
+      </tr>
+      <tr>
+        <td>Eggplant</td>
+        <td>1 large</td>
+        <td><span class="mtag m-sun">Sun Dinner</span> Vegan lasagna filling</td>
+      </tr>
+      <tr>
+        <td>Baby spinach</td>
+        <td>150 g bag</td>
+        <td><span class="mtag m-sun">Sun Dinner</span> Vegan lasagna layers</td>
+      </tr>
+      <tr>
+        <td>Onions (yellow)</td>
+        <td>6 medium</td>
+        <td><span class="mtag m-all">All meals</span> Lasagna + shakshuka + ranch dinner</td>
+      </tr>
+      <tr>
+        <td>Garlic bulbs</td>
+        <td>3 bulbs</td>
+        <td><span class="mtag m-all">All meals</span> Lasagna + garlic bread + shakshuka + ranch night</td>
+      </tr>
+      <tr>
+        <td>Potatoes (russet)</td>
+        <td>3 kg bag</td>
+        <td><span class="mtag m-mon">Mon Bkfst</span><span class="mtag m-mon">Mon Dinner</span> 6 large for burritos + 2kg for mash</td>
+      </tr>
+      <tr>
+        <td>Broccoli</td>
+        <td>3 large heads</td>
+        <td><span class="mtag m-mon">Mon Dinner</span> Shared roasted side for all guests</td>
+      </tr>
+      <tr>
+        <td>Carrots</td>
+        <td>1 kg bag</td>
+        <td><span class="mtag m-mon">Mon Dinner</span> Shared roasted side for all guests</td>
+      </tr>
+      <tr>
+        <td>Lemons</td>
+        <td>4</td>
+        <td><span class="mtag m-tue">Tue Lunch</span><span class="mtag m-wed">Wed Bkfst</span> Caesar dressing squeeze + avo toast</td>
+      </tr>
+      <tr>
+        <td>Fresh parsley</td>
+        <td>2 bunches</td>
+        <td><span class="mtag m-tue">Tue Bkfst</span> Shakshuka garnish + general herbs</td>
+      </tr>
+      <tr>
+        <td>Fresh cilantro</td>
+        <td>1 bunch</td>
+        <td><span class="mtag m-mon">Mon Lunch</span> Quesadillas + guacamole garnish</td>
+      </tr>
+      <tr>
+        <td>Fresh rosemary</td>
+        <td>1 bunch</td>
+        <td><span class="mtag m-mon">Mon Dinner</span> Steak + chicken seasoning</td>
+      </tr>
+      <tr>
+        <td>Fresh thyme</td>
+        <td>1 bunch</td>
+        <td><span class="mtag m-mon">Mon Dinner</span> Steak + chicken seasoning</td>
+      </tr>
+      <tr>
+        <td>Bananas</td>
+        <td>1 bunch (~8)</td>
+        <td><span class="mtag m-mon">Mon Bkfst</span> Fruit bowl</td>
+      </tr>
+      <tr>
+        <td>Strawberries</td>
+        <td>2 × 250g punnets</td>
+        <td><span class="mtag m-mon">Mon Bkfst</span><span class="mtag m-wed">Wed Bkfst</span> Fruit bowl + yogurt bar topping</td>
+      </tr>
+      <tr>
+        <td>Mixed berries</td>
+        <td>2 × 250g punnets</td>
+        <td><span class="mtag m-wed">Wed Bkfst</span> Yogurt bar + avo toast garnish</td>
+      </tr>
+      <tr>
+        <td>Grapes</td>
+        <td>500 g bag</td>
+        <td><span class="mtag m-mon">Mon Bkfst</span> Fruit bowl</td>
+      </tr>
+      <tr>
+        <td>Melon (cantaloupe or honeydew)</td>
+        <td>1 whole</td>
+        <td><span class="mtag m-mon">Mon Bkfst</span> Fruit bowl — sliced</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ═══ PANTRY & CANNED ═══ -->
+<div class="category-block">
+  <div class="category-title">Pantry & Canned Goods</div>
+  <table>
+    <thead>
+      <tr>
+        <th>Item</th>
+        <th>Quantity</th>
+        <th>Used for / Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Lasagna sheets (dry)</td>
+        <td>3 × 500g boxes</td>
+        <td><span class="mtag m-sun">Sun Dinner</span> 2 boxes meat tray + 1 box vegan tray</td>
+      </tr>
+      <tr>
+        <td>Tomato passata</td>
+        <td>4 × 700ml jars</td>
+        <td><span class="mtag m-sun">Sun Dinner</span> Both lasagna sauces</td>
+      </tr>
+      <tr>
+        <td>Canned whole tomatoes (400g)</td>
+        <td>6 tins</td>
+        <td><span class="mtag m-sun">Sun Dinner</span><span class="mtag m-tue">Tue Bkfst</span> 2 for lasagna sauce + 4 for shakshuka</td>
+      </tr>
+      <tr>
+        <td>Black beans (400g cans)</td>
+        <td>3 cans</td>
+        <td><span class="mtag m-mon">Mon Bkfst</span><span class="mtag m-mon">Mon Lunch</span> 2 for burritos + 1 for veg quesadillas</td>
+      </tr>
+      <tr>
+        <td>Chickpeas (400g can)</td>
+        <td>1 can</td>
+        <td><span class="mtag m-mon">Mon Dinner</span> Saffron couscous for Sandeep + Riddhi</td>
+      </tr>
+      <tr>
+        <td>Couscous</td>
+        <td>400 g</td>
+        <td><span class="mtag m-mon">Mon Dinner</span> Saffron couscous — 2 people, generous</td>
+      </tr>
+      <tr>
+        <td>Saffron</td>
+        <td>1 small sachet (0.5g)</td>
+        <td><span class="mtag m-mon">Mon Dinner</span> Couscous · a little goes a long way</td>
+      </tr>
+      <tr>
+        <td>Flour tortillas (large, 10-inch)</td>
+        <td>2 packs of 10</td>
+        <td><span class="mtag m-mon">Mon Bkfst</span><span class="mtag m-mon">Mon Lunch</span> 16 burritos + 16 quesadillas = 32 needed · 20 is enough as quesadillas fold</td>
+      </tr>
+      <tr>
+        <td>Salsa (jar)</td>
+        <td>2 × 450g jars</td>
+        <td><span class="mtag m-mon">Mon Bkfst</span><span class="mtag m-mon">Mon Lunch</span> Burritos + quesadilla bar</td>
+      </tr>
+      <tr>
+        <td>Hummus</td>
+        <td>4 × 200g tubs</td>
+        <td><span class="mtag m-mon">Mon Lunch</span><span class="mtag m-tue">Tue Lunch</span> 2 for Mon crackers + dips · 2 for Tue sandwich bar</td>
+      </tr>
+      <tr>
+        <td>Caesar dressing (bottled)</td>
+        <td>2 × bottles</td>
+        <td><span class="mtag m-tue">Tue Lunch</span> Caesar salad for 15</td>
+      </tr>
+      <tr>
+        <td>Salad dressing (vinaigrette)</td>
+        <td>2 × bottles</td>
+        <td><span class="mtag m-sun">Sun Dinner</span> Green salad with lasagna</td>
+      </tr>
+      <tr>
+        <td>Croutons</td>
+        <td>2 × bags</td>
+        <td><span class="mtag m-tue">Tue Lunch</span> Caesar salad</td>
+      </tr>
+      <tr>
+        <td>Vegan ricotta (or firm tofu)</td>
+        <td>1 × 350g</td>
+        <td><span class="mtag m-sun">Sun Dinner</span> Vegan lasagna filling for Sandeep + Riddhi</td>
+      </tr>
+      <tr>
+        <td>Pita bread</td>
+        <td>2 packs of 8 (16 total)</td>
+        <td><span class="mtag m-tue">Tue Bkfst</span> Shakshuka · 1 per person + buffer</td>
+      </tr>
+      <tr>
+        <td>Sandwich bread (loaves)</td>
+        <td>2 loaves</td>
+        <td><span class="mtag m-tue">Tue Lunch</span><span class="mtag m-wed">Wed Bkfst</span> Sandwich bar + avo toast base</td>
+      </tr>
+      <tr>
+        <td>Sourdough or artisan bread</td>
+        <td>2 loaves</td>
+        <td><span class="mtag m-wed">Wed Bkfst</span> Avocado toast station · thicker slices</td>
+      </tr>
+      <tr>
+        <td>Baguettes</td>
+        <td>4 large</td>
+        <td><span class="mtag m-sun">Sun Dinner</span> Garlic bread with lasagna</td>
+      </tr>
+      <tr>
+        <td>Crackers (assorted)</td>
+        <td>2 × boxes</td>
+        <td><span class="mtag m-mon">Mon Lunch</span> Crackers + dips with quesadillas</td>
+      </tr>
+      <tr>
+        <td>Granola</td>
+        <td>1 × 500g bag</td>
+        <td><span class="mtag m-tue">Tue Bkfst</span><span class="mtag m-wed">Wed Bkfst</span> Yogurt bar Tue + Wed</td>
+      </tr>
+      <tr>
+        <td>Muffins</td>
+        <td>12 (2 packs of 6 or 1 box)</td>
+        <td><span class="mtag m-wed">Wed Bkfst</span> Departure morning · grab and go</td>
+      </tr>
+      <tr>
+        <td>Olive oil (extra virgin)</td>
+        <td>1 × 750ml bottle</td>
+        <td><span class="mtag m-all">All meals</span> Cooking + dressing throughout the trip</td>
+      </tr>
+      <tr>
+        <td>Honey</td>
+        <td>1 small jar</td>
+        <td><span class="mtag m-tue">Tue Bkfst</span><span class="mtag m-wed">Wed Bkfst</span> Yogurt bar topping</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ═══ SPICES & SEASONINGS ═══ -->
+<div class="category-block">
+  <div class="category-title">Spices & Seasonings</div>
+  <table>
+    <thead>
+      <tr>
+        <th>Item</th>
+        <th>Quantity</th>
+        <th>Used for / Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Salt (kosher or sea salt)</td>
+        <td>1 large box/bag</td>
+        <td><span class="mtag m-all">All meals</span></td>
+      </tr>
+      <tr>
+        <td>Black pepper (grinder)</td>
+        <td>1 grinder</td>
+        <td><span class="mtag m-all">All meals</span></td>
+      </tr>
+      <tr>
+        <td>Cumin (ground)</td>
+        <td>1 jar</td>
+        <td><span class="mtag m-tue">Tue Bkfst</span> Shakshuka</td>
+      </tr>
+      <tr>
+        <td>Smoked paprika</td>
+        <td>1 jar</td>
+        <td><span class="mtag m-tue">Tue Bkfst</span><span class="mtag m-mon">Mon Dinner</span> Shakshuka + chicken thigh seasoning</td>
+      </tr>
+      <tr>
+        <td>Chili flakes</td>
+        <td>1 jar</td>
+        <td><span class="mtag m-tue">Tue Bkfst</span> Shakshuka + general table use</td>
+      </tr>
+      <tr>
+        <td>Dried oregano</td>
+        <td>1 jar</td>
+        <td><span class="mtag m-sun">Sun Dinner</span> Lasagna sauce</td>
+      </tr>
+      <tr>
+        <td>Garlic powder</td>
+        <td>1 jar</td>
+        <td><span class="mtag m-mon">Mon Dinner</span> Steak dry rub</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ═══ BEVERAGES ═══ -->
+<div class="category-block">
+  <div class="category-title">Beverages</div>
+  <table>
+    <thead>
+      <tr>
+        <th>Item</th>
+        <th>Quantity</th>
+        <th>Used for / Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Orange juice</td>
+        <td>4 × 1.5L cartons</td>
+        <td><span class="mtag m-all">All mornings</span> Mon + Tue + Wed breakfasts</td>
+      </tr>
+      <tr>
+        <td>Ground coffee</td>
+        <td>1 × 500g bag</td>
+        <td><span class="mtag m-all">All mornings</span> Covers 3 mornings for 15 people</td>
+      </tr>
+      <tr>
+        <td>Tea bags (assorted)</td>
+        <td>1 box (40 bags)</td>
+        <td><span class="mtag m-all">All days</span></td>
+      </tr>
+      <tr>
+        <td>Lemonade</td>
+        <td>2 × 1.5L bottles</td>
+        <td><span class="mtag m-tue">Tue Lunch</span> Caesar salad lunch</td>
+      </tr>
+      <tr>
+        <td>Sparkling water</td>
+        <td>2 × 6-packs (500ml)</td>
+        <td><span class="mtag m-all">All meals</span> Table water throughout</td>
+      </tr>
+      <tr>
+        <td>Still water (large bottles)</td>
+        <td>4 × 6-packs or 4 × 5L jugs</td>
+        <td><span class="mtag m-all">All days</span> Confirm with host if ranch has tap supply</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ═══ SNACK BASKET ═══ -->
+<div class="category-block">
+  <div class="category-title">Snack Basket — Replenished Daily</div>
+  <table>
+    <thead>
+      <tr>
+        <th>Item</th>
+        <th>Quantity</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="alert-row">
+        <td>⚠ Trail mix / mixed nuts</td>
+        <td>2 × bags</td>
+        <td>MUST be peanut-free — check label carefully · tree nuts OK</td>
+      </tr>
+      <tr>
+        <td>Tortilla chips</td>
+        <td>3 × bags</td>
+        <td>Always out on the counter</td>
+      </tr>
+      <tr>
+        <td>Granola bars</td>
+        <td>1 box (12 bars)</td>
+        <td>Check for peanut ingredients · for between-meal grazing</td>
+      </tr>
+      <tr>
+        <td>Dark chocolate / candy</td>
+        <td>2 × bars or bags</td>
+        <td>Optional sweet snack on the counter</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+</div><!-- end content -->
+
+<!-- FOOTER -->
+<div class="footer">
+  <strong>Not on this list (restaurant, not ranch):</strong> Tuesday dinner is at a restaurant downtown — no groceries needed for that meal.<br><br>
+  <strong>Quantities logic:</strong> All amounts calculated for 15 people with ~10–15% buffer for error, seconds, and waste. No bulk buying — amounts are sized to use up across the meals listed with minimal leftovers.<br><br>
+  <strong>Dietary note for labelling:</strong> Vegan lasagna, potato-black bean burritos, cheese-black bean quesadillas and saffron couscous must be clearly labelled before serving. Sandeep + Riddhi = vegetarian, no eggs. Atreya + Krishna = no beef/pork. Perry = no peanuts anywhere.
+</div>
+
+</body>
+</html>
